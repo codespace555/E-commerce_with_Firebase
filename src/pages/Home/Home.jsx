@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, ProductCard, Testimonial } from "../../components/components";
+import { DisplayOffer, Layout, ProductCard, Testimonial } from "../../components/components";
 import Filter from "../../components/Filter/Filter";
 
 function Home() {
@@ -25,7 +25,7 @@ function Home() {
           <ProductCard />
           <ProductCard />
         </div>
-
+<DisplayOffer/>
         <div className="container px-5 py-10 mx-auto text-gray-600 body-font mb-10">
           <h1 className=" text-center text-3xl font-bold text-black dark:text-gray-300">
             Testimonial
@@ -36,7 +36,7 @@ function Home() {
             saying
           </h2>
 
-          <div className="flex -m-4 border-pink-600 rounded-lg sm:rounded-none ">
+          <div className="flex flex-wrap -m-4 border-pink-600 rounded-lg sm:rounded-none ">
             <Testimonial name={"Naman Kumar"} />
             <Testimonial name="Ranjan Kumar" />
             <Testimonial name="Sahil Kumar" />
@@ -47,7 +47,7 @@ function Home() {
 
 
 
-        
+
       </section>
     </Layout>
   );
