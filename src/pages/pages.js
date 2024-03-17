@@ -6,6 +6,7 @@ import NoRoutes from "./NoRoutes/NoRoutes";
 import Singup from "./Singup/Singup";
 import Login from "./Login/Login";
 import Allproducts from "./AllProducts/Allproducts";
+import ProductDetails from "./ProductDetails/ProductDetails";
 export {
     Admin,
     Home,
@@ -14,5 +15,6 @@ export {
     NoRoutes,
     Singup,
     Login,
-    Allproducts
+    Allproducts,
+    ProductDetails
 }

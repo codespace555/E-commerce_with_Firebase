@@ -1,6 +1,6 @@
 import React from "react";
 
-function ProductCard({imglink = "https://dummyimage.com/720x400" , title = "This is title" , description = "description" , addToCart}) {
+function ProductCard({imglink = "https://dummyimage.com/720x400" , title = "This is title" , description = "description" , addToCart,price=300}) {
   return (
     <>
       <div className="p-4 md:w-1/4  drop-shadow-lg ">
@@ -33,7 +33,7 @@ function ProductCard({imglink = "https://dummyimage.com/720x400" , title = "This
               className="leading-relaxed mb-3 dark:text-gray-300"
               
             >
-              ₹ 500
+              ₹{price}
             </p>
             <div className=" flex justify-center">
               <button

@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import store from './store/store.js'
-import { Admin, Home, Login, Singup ,Allproducts, Order, Cart, NoRoutes} from './pages/pages.js';
+import { Admin, Home, Login, Singup ,Allproducts, Order, Cart, NoRoutes, ProductDetails} from './pages/pages.js';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 
@@ -67,6 +67,10 @@ const router = createBrowserRouter([
       {
         path :"/*",
         element: <NoRoutes/>
+      },
+      {
+        path: "/poroductdetails/:slug",
+        element: <ProductDetails />,
       }
     ],
   },
