@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { Navbar } from "./components/components";
+import { Footer, Navbar } from "./components/components";
+import { Outlet } from "react-router-dom";
 
 
 function App() {
@@ -22,8 +23,9 @@ function App() {
   return (
     <>
     <div className="bg-black h-screen">
-
     <Navbar/>
+    <Outlet/>
+    <Footer/>
     </div>
     </>
   )
