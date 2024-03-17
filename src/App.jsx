@@ -22,7 +22,7 @@ function App() {
 }, [themeMode]);
   return (
     <>
-    <div className="bg-black h-screen">
+    <div className="dark:bg-slate-800 bg-slate-400 h-auto">
     <Navbar/>
     <Outlet/>
     <Footer/>
