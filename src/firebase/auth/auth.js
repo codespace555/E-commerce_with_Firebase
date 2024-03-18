@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, fireDB, provider } from "../firebaseconfig";
 import { addDoc, collection } from "firebase/firestore";
 
@@ -34,32 +34,26 @@ const createuserBygoogle = async () => {
       // Signed in successfully
       const users = userCredential.user;
 
-    
-        let today = new Date();
-        let date =
-          today.getFullYear() +
-          "-" +
-          (today.getMonth() + 1) +
-          "-" +
-          today.getDate();
-        let time =
-          today.getHours() +
-          ":" +
-          today.getMinutes() +
-          ":" +
-          today.getSeconds();
-          const user = {
-              name: users.displayName,
-              uid:  users.uid  || "",
-              email: users.email,
-              time: date + " " + time,
-            };
-            const userRef = collection(fireDB, "users");
-            addDoc(userRef, user);
-            console.log("User signed in with Google:", user);
-            return user;
-      
+      let today = new Date();
+      let date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+      let time =
+        today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      const user = {
+        name: users.displayName,
+        uid: users.uid || "",
+        email: users.email,
+        time: date + " " + time,
+      };
+      const userRef = collection(fireDB, "users");
+      addDoc(userRef, user);
+      console.log("User signed in with Google:", user);
 
+      return user;
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -68,4 +62,43 @@ const createuserBygoogle = async () => {
     });
 };
 
-export { createUser, createuserBygoogle };
+
+
+const login = async({email,password}) => {
+    try {
+       return await signInWithEmailAndPassword(auth, email, password)
+        
+    } catch (error) {
+        error("Error on Login",error);
+    }
+
+
+}
+
+const  getCurrentUser = async() => {
+    try {
+      return await onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is logged in.
+          const userData = {
+            displayName: user.name,
+            email: user.email,
+          }
+          console.log(userData)
+      }else{
+        console.log("logout")
+      }
+    }
+      )
+    } catch (error) {
+      console.log("appwrite server:: getuser:: error ", error);
+    }
+    return null;
+  }
+
+
+
+
+
+
+export { createUser, createuserBygoogle ,login,getCurrentUser};
