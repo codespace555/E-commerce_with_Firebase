@@ -1,15 +1,23 @@
-import React from 'react'
+import React from "react";
 import { Provider } from "react-redux";
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
-import store from './store/store.js'
-import { Admin, Home, Login, Singup ,Allproducts, Order, Cart, NoRoutes, ProductDetails} from './pages/pages.js';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-
-
-
-
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
+import store from "./store/store.js";
+import {
+  Admin,
+  Home,
+  Login,
+  Singup,
+  Allproducts,
+  Order,
+  Cart,
+  NoRoutes,
+  ProductDetails,
+  Addproduct,
+  EditProduct,
+} from "./pages/pages.js";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
@@ -22,64 +30,50 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: (
-          
-           <Admin/>
-          
-        ),
+        element: <Admin />,
       },
       {
         path: "/signup",
-        element: (
-         
-            <Singup />
-         
-        ),
+        element: <Singup />,
       },
       {
         path: "/login",
-        element: (
-        
-            <Login />
-          
-        ),
+        element: <Login />,
       },
       {
         path: "/all-products",
-        element: (
-         
-            <Allproducts/>
-         
-        ),
+        element: <Allproducts />,
       },
       {
         path: "/Order",
-        element: (
-          
-            <Order/>
-          
-        ),
+        element: <Order />,
       },
       {
         path: "/cart",
-        element: <Cart/>,
+        element: <Cart />,
       },
       {
-        path :"/*",
-        element: <NoRoutes/>
+        path: "/*",
+        element: <NoRoutes />,
       },
       {
         path: "/poroductdetails/:slug",
         element: <ProductDetails />,
-      }
+      },
+      {
+        path: "/addproduct",
+        element: <Addproduct />,
+      },
+      {
+        path: "/editproduct/:slug",
+        element: <EditProduct />,
+      },
     ],
   },
 ]);
 
-
-
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <RouterProvider router={router} />
-    </Provider>,
-)
+  </Provider>
+);

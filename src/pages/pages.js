@@ -7,6 +7,8 @@ import Singup from "./Singup/Singup";
 import Login from "./Login/Login";
 import Allproducts from "./AllProducts/Allproducts";
 import ProductDetails from "./ProductDetails/ProductDetails";
+import Addproduct from "./Admin/addeditproduct/Addproduct";
+import EditProduct from "./Admin/addeditproduct/EditProduct";
 export {
     Admin,
     Home,
@@ -16,5 +18,8 @@ export {
     Singup,
     Login,
     Allproducts,
-    ProductDetails
+    ProductDetails,
+    Addproduct,
+    EditProduct
+
 }
