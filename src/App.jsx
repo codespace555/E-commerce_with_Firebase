@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { Footer, Navbar } from "./components/components";
 import { Outlet } from "react-router-dom";
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 function App() {
@@ -25,6 +28,7 @@ function App() {
     <div className="dark:bg-slate-800 bg-slate-400 h-auto">
     <Navbar/>
     <Outlet/>
+    <ToastContainer />
     <Footer/>
     </div>
     </>

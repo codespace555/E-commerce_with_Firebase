@@ -2,11 +2,22 @@ import React, { useState } from "react";
 import { Button, Input } from "../../ButtonInput";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { createUser } from "../../firebase/auth/auth";
+import { toast } from "react-toastify";
 
 function Singup() {
   const [error, setError] = useState("");
   const { register, handleSubmit } = useForm();
-  const signup = async () => {};
+  const signup = async (data) => {
+    setError("");
+   try {
+     const userData = await createUser(data);
+    
+   } catch (error) {
+    setError("something  went wrong! to create user");
+   toast.error(error.code)
+   }
+  };
 
   return (
     <>
@@ -20,7 +31,7 @@ function Singup() {
           <form onSubmit={handleSubmit(signup)}>
             <Input
               type="text"
-             
+              required
               placeHolder="Enter your full name"
               {...register("name", {
                 required: true,
@@ -28,7 +39,7 @@ function Singup() {
             />
             <Input
               type="email"
-            
+              required
               placeHolder="Enter your email address"
               {...register("email", {
                 required: true,
@@ -41,12 +52,15 @@ function Singup() {
               })}
             />
             <Input
-              
               type="password"
+              required
               placeHolder="Enter Your password"
               {...register("password", { required: true })}
             />
-            <Button type="submit" className="w-full mt-5 bg-pink-500 hover:bg-pink-700">
+            <Button
+              type="submit"
+              className="w-full mt-5 bg-pink-500 hover:bg-pink-700"
+            >
               Sign up
             </Button>
           </form>

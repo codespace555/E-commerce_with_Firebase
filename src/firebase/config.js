@@ -5,7 +5,7 @@ const conf = {
   storageBucket: String(import.meta.env.VITE_BUCKET_ID),
   messagingSenderId: String(import.meta.env.VITE_MESSAGINGSENDER_ID),
   appId: String(import.meta.env.VITE_APP_ID),
-  measurementId: String(import.meta.env.vITE_MEASUREMENT_ID),
+  measurementId: String(import.meta.env.VITE_MEASUREMENT_ID),
 };
 
 export default conf;
