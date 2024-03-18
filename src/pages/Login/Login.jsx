@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Input } from "../../ButtonInput";
-import { getCurrentUser, login } from "../../firebase/auth/auth";
+import { createuserBygoogle, getCurrentUser, login } from "../../firebase/auth/auth";
+import { FcGoogle } from "react-icons/fc";
 
 function Login() {
   const [error, setError] = useState("");
@@ -22,9 +23,25 @@ function Login() {
         console.log("login");
       }
     } catch (error) {
-      console.log("from login " + error);
+      setError(error.message);
+      
     }
   };
+
+  const singupWithEmail = async() =>{
+    setError("");
+    try {
+      const user = await createuserBygoogle()
+      if(user){
+        getCurrentUser()
+        navigate("/");
+      }
+      
+    } catch (error) {
+      setError(error.message);
+      
+    }
+  }
 
   return (
     <>
@@ -58,6 +75,8 @@ function Login() {
               Login
             </Button>
           </form>
+          <h1 className="mt-2 text-center text-base text-gray-200">or</h1>
+          <button className="w-full mt-5 bg-gray-700 hover:bg-gray-600 flex p-3 items-center gap-2 justify-center rounded-lg dark:text-gray-200" onClick={singupWithEmail}><FcGoogle /> Singup with Google</button>
           {error && <p className=" text-red-500 text-center">{error}</p>}
           <p className="mt-2 text-center text-base text-gray-200">
             Don't have an account?

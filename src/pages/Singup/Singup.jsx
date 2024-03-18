@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { Button, Input } from "../../ButtonInput";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { createUser, createuserBygoogle } from "../../firebase/auth/auth";
+import {
+  createUser,
+  createuserBygoogle,
+  getCurrentUser,
+} from "../../firebase/auth/auth";
 import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
 
@@ -11,23 +15,32 @@ function Singup() {
   const { register, handleSubmit } = useForm();
   const signup = async (data) => {
     setError("");
-   try {
-     const userData = await createUser(data);
-    
-   } catch (error) {
-    setError("something  went wrong! to create user");
-   toast.error(error.code)
-   }
+    try {
+      const userData = await createUser(data);
+      if (userData) {
+        const user = await getCurrentUser();
+        if (user) {
+          navigate("/");
+        }
+      }
+    } catch (error) {
+      setError("something  went wrong! to create user");
+      toast.error(error.code);
+    }
   };
 
-  const singupWithEmail = async() =>{
+  const singupWithEmail = async () => {
     try {
-      await createuserBygoogle()
-      
-    } catch (error) {
-      
-    }
-  }
+      const user = await createuserBygoogle();
+      console.log(user);
+      if (user) {
+        const user = await getCurrentUser();
+        if (user) {
+          navigate("/");
+        }
+      }
+    } catch (error) {}
+  };
   return (
     <>
       <div className=" flex justify-center items-center h-screen">
@@ -74,7 +87,12 @@ function Singup() {
             </Button>
           </form>
           <h1 className="mt-2 text-center text-base text-gray-200">or</h1>
-          <button className="w-full mt-5 bg-gray-700 hover:bg-gray-600 flex p-3 items-center gap-2 justify-center rounded-lg dark:text-gray-200" onClick={singupWithEmail}><FcGoogle /> Singup with Google</button>
+          <button
+            className="w-full mt-5 bg-gray-700 hover:bg-gray-600 flex p-3 items-center gap-2 justify-center rounded-lg dark:text-gray-200"
+            onClick={singupWithEmail}
+          >
+            <FcGoogle /> Singup with Google
+          </button>
           {error && <p className=" text-red-500 text-center">{error}</p>}
           <p className="mt-2 text-center text-base text-gray-200">
             Already have an account?
@@ -85,7 +103,6 @@ function Singup() {
               {" "}
               Login{" "}
             </Link>
-            
           </p>
         </div>
       </div>

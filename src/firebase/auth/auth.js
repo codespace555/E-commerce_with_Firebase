@@ -1,6 +1,18 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth, fireDB, provider } from "../firebaseconfig";
 import { addDoc, collection } from "firebase/firestore";
+
+const login = async ({ email, password }) => {
+  try {
+    return await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    console.log("Error on Login", error);
+  }
+};
 
 const createUser = async ({ name, email, password }) => {
   try {
@@ -14,10 +26,12 @@ const createUser = async ({ name, email, password }) => {
       today.getDate();
     let time =
       today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+   
+
     const user = {
       name: name,
       uid: users.user?.uid || "",
-      email: users.user.email,
+      email: users.user?.email,
       time: date + " " + time,
     };
     const userRef = collection(fireDB, "users");
@@ -43,6 +57,7 @@ const createuserBygoogle = async () => {
         today.getDate();
       let time =
         today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
       const user = {
         name: users.displayName,
         uid: users.uid || "",
@@ -50,7 +65,7 @@ const createuserBygoogle = async () => {
         time: date + " " + time,
       };
       const userRef = collection(fireDB, "users");
-      addDoc(userRef, user);
+       addDoc(userRef, user);
       console.log("User signed in with Google:", user);
 
       return user;
@@ -62,43 +77,19 @@ const createuserBygoogle = async () => {
     });
 };
 
-
-
-const login = async({email,password}) => {
-    try {
-       return await signInWithEmailAndPassword(auth, email, password)
-        
-    } catch (error) {
-        error("Error on Login",error);
+const getCurrentUser = async () => {
+  try {
+    const user = await auth.currentUser;
+    if (user) {
+      console.log(user)
+      return user;
+    } else {
+      console.log("logout");
     }
-
-
-}
-
-const  getCurrentUser = async() => {
-    try {
-      return await onAuthStateChanged(auth, (user) => {
-        if (user) {
-          // User is logged in.
-          const userData = {
-            displayName: user.name,
-            email: user.email,
-          }
-          console.log(userData)
-      }else{
-        console.log("logout")
-      }
-    }
-      )
-    } catch (error) {
-      console.log("appwrite server:: getuser:: error ", error);
-    }
-    return null;
+  } catch (error) {
+    console.log("appwrite server:: getuser:: error ", error);
   }
+  return null;
+};
 
-
-
-
-
-
-export { createUser, createuserBygoogle ,login,getCurrentUser};
+export { createUser, createuserBygoogle, login, getCurrentUser };
