@@ -8,4 +8,5 @@ const app = initializeApp(conf);
 const fireDB = getFirestore(app);
 const auth = getAuth(app)
 const analytics =  getAnalytics(app);
-export {fireDB,auth,analytics } ;
+const provider =  new GoogleAuthProvider();
+export {fireDB,auth,analytics ,provider} ;
