@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Input } from "../../ButtonInput";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import authfirebase from "../../firebase/auth/fireAuth";
 import GoogleSignIn from "../../ButtonInput/SignInWithGoogle/GoogleSignIn";
 
@@ -23,7 +23,6 @@ function Singup() {
       console.log(userData);
       if (userData) {
         const user = await authfirebase.getCurrentUser();
-        console.log(user);
       }
     } catch (error) {
       console.log("error to create user" + error);
@@ -103,7 +102,6 @@ function Singup() {
           </p>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 }

@@ -2,9 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
  const initialState = {
     status: false,
-    userData: null,
+    userData: "",
     admin:false,
-    product:false
+    product:false,
+    data:""
   };
 
   const authSlice = createSlice({
@@ -14,6 +15,7 @@ import { createSlice } from "@reduxjs/toolkit";
       loginauth: (state, action) => {
         state.status = true;
         state.userData = action.payload.userData;
+        state.data=action.payload
       },
       logoutauth: (state) => {
         state.status = false;

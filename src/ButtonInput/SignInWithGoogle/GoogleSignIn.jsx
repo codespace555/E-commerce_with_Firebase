@@ -1,8 +1,5 @@
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
-import authfirebase from "../../firebase/auth/fireAuth";
-import { useNavigate } from "react-router-dom";
-
 function GoogleSignIn({singupWithEmail}) {
   
   return (

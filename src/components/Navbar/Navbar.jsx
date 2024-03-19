@@ -15,13 +15,14 @@ function Navbar() {
   const themeMode = useSelector((state) => state.theme.themethemeMode);
   const authStatus = useSelector((state) => state.auth.status);
   const adminStatus = useSelector((state) => state.auth.admin);
+  const userData = useSelector((state) => state.auth.data)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [drpo, setDrop] = useState("hidden");
+ 
 
   // const navigate = useNavigate();
-
+console.log(userData);
   const themechange = () => {
     dispatch(darkTheme());
   };
@@ -50,7 +51,7 @@ function Navbar() {
   ];
 
   const logouthendel = async () => {
-    console.log("polu");
+    
     await authfirebase
       .logout()
       
@@ -137,7 +138,7 @@ function Navbar() {
                         <li>
                           <button
                             onClick={logouthendel}
-                            className=" hover:bg-blue-600 hover:text-gray-300 border-blue-900 border-2 px-6 py-2 rounded-lg text-center "
+                            className=" hover:bg-green-600 hover:text-gray-300 border-green-900 border-2 px-6 py-2 rounded-lg text-center "
                           >
                             Logout
                           </button>
@@ -185,9 +186,11 @@ function Navbar() {
 
         {/* desktop */}
         <header>
-          <p className="flex h-10 items-center justify-center bg-pink-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8 dark:text-white dark:bg-[#3e4042]">
-            Get free delivery on orders over ₹300
-          </p>
+          <div className="flex justify-between h-10 items-center  bg-pink-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8 dark:text-white dark:bg-[#3e4042]">
+            <span className="hidden md:block">Get free delivery on orders over ₹300 </span>
+            <span className="font-semibold text-xl">Welcome To Local {userData} <span></span></span>
+            <Togglebtn togglechange={themechange} checked={themeMode} />
+          </div>
           <nav className="flex justify-between items-center bg-gray-400 px-4 sm:px-6 lg:px-8 shadow-xl dark:text-white dark:bg-[#282c34] py-2">
             <div>
               <Logo />
@@ -242,7 +245,7 @@ function Navbar() {
                   <li>
                     <button
                       onClick={logouthendel}
-                      className=" hover:bg-blue-600 hover:text-gray-300 border-blue-900 border-2 px-6 py-2 rounded-lg text-center "
+                      className=" bg-green-600 hover:text-gray-300 border-green-900 border-2 px-6 py-2 rounded-lg text-center "
                     >
                       Logout
                     </button>
@@ -256,7 +259,7 @@ function Navbar() {
                   </button>
                 )}
 
-                <Togglebtn togglechange={themechange} checked={themeMode} />
+                
                 <Link to={"/cart"}>
                   <div className="ml-4 flex lg:ml-6 ">
                     <svg
@@ -280,6 +283,7 @@ function Navbar() {
                     <span className="sr-only">items in cart, view bag</span>
                   </div>
                 </Link>
+                
               </ul>
             </div>
           </nav>
