@@ -1,21 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Input } from "../../ButtonInput";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { FcGoogle } from "react-icons/fc";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import authfirebase from "../../firebase/auth/fireAuth";
+
 
 
 function Singup() {
   const [error, setError] = useState("");
   const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
+ 
+
   const signup = async (data) => {
-   
+    setError("");
+    console.log(data);
+    try {
+      const userData = await authfirebase.createUser(data.name,data.email,data.password);
+      console.log(userData);
+      if (userData) {
+        const user = await authfirebase.getCurrentUser();
+        console.log(user);
+
+      }
+    } catch (error) {
+      console.log("error to create user" + error);
+    }
   };
 
-  const singupWithEmail = async () => {
-   
-  };
   return (
     <>
       <div className=" flex justify-center items-center h-screen">
@@ -62,12 +75,7 @@ function Singup() {
             </Button>
           </form>
           <h1 className="mt-2 text-center text-base text-gray-200">or</h1>
-          <button
-            className="w-full mt-5 bg-gray-700 hover:bg-gray-600 flex p-3 items-center gap-2 justify-center rounded-lg dark:text-gray-200"
-            onClick={singupWithEmail}
-          >
-            <FcGoogle /> Singup with Google
-          </button>
+          {/* button */}
           {error && <p className=" text-red-500 text-center">{error}</p>}
           <p className="mt-2 text-center text-base text-gray-200">
             Already have an account?
@@ -81,6 +89,7 @@ function Singup() {
           </p>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }

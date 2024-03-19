@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
  const initialState = {
     status: false,
     userData: null,
-    admin:true,
+    admin:false,
     product:false
   };
 

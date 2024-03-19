@@ -8,40 +8,24 @@ import { darkTheme } from "../../store/theam/theme";
 import { Togglebtn } from "../../ButtonInput";
 
 import { Logo } from "../components";
+import authfirebase from "../../firebase/auth/fireAuth";
+import { logoutauth } from "../../store/auth/authSlice";
 
 function Navbar() {
   const themeMode = useSelector((state) => state.theme.themethemeMode);
   const authStatus = useSelector((state) => state.auth.status);
   const adminStatus = useSelector((state) => state.auth.admin);
-const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [drpo, setDrop] = useState("hidden");
 
   // const navigate = useNavigate();
-  const dropDown = () => {
-    if (drpo === "hidden") {
-      setDrop("flex");
-    } else {
-      setDrop("hidden");
-    }
-  };
+
   const themechange = () => {
     dispatch(darkTheme());
   };
-  const authItem = [
-    {
-      name: "Login",
-      slug: "/login",
-      active: authStatus,
-    },
-
-    {
-      name: "Logout",
-      slug: "/logout",
-      active: !authStatus,
-    },
-  ];
+  console.log(authStatus);
   const adminItem = [
     {
       name: "Admin",
@@ -64,6 +48,16 @@ const navigate = useNavigate()
       slug: "/order",
     },
   ];
+
+  const logouthendel = async () => {
+    console.log("polu");
+    await authfirebase
+      .logout()
+      
+        dispatch(logoutauth(null));
+
+     
+  };
 
   return (
     <>
@@ -115,7 +109,10 @@ const navigate = useNavigate()
                     <ul className="flex flex-col gap-10 justify-between items-center">
                       {navItem.map((item) => (
                         <li key={item.slug}>
-                          <button onClick={() =>navigate(item.slug)} className="hover:underline ">
+                          <button
+                            onClick={() => navigate(item.slug)}
+                            className="hover:underline "
+                          >
                             {item.name}
                           </button>
                         </li>
@@ -124,45 +121,59 @@ const navigate = useNavigate()
                       {adminItem.map((item) =>
                         item.active ? (
                           <li key={item.slug}>
-                            <button onClick={() => navigate(item.slug)} className="hover:underline ">
+                            <button
+                              onClick={() =>
+                                 navigate(item.slug)
+                              }
+                              className="hover:underline "
+                            >
                               {item.name}
                             </button>
                           </li>
                         ) : null
                       )}
 
-                      {authItem.map((item) =>
-                        !item.active ? (
-                          <li key={item.slug}>
-                            {" "}
-                            <button onClick={() =>navigate(item.slug)} className=" hover:bg-blue-600 hover:text-gray-300 border-blue-900 border-2 px-6 py-2 rounded-lg text-center ">
-                              {item.name}
-                            </button>
-                          </li>
-                        ) : null
+                      {authStatus ? (
+                        <li>
+                          <button
+                            onClick={logouthendel}
+                            className=" hover:bg-blue-600 hover:text-gray-300 border-blue-900 border-2 px-6 py-2 rounded-lg text-center "
+                          >
+                            Logout
+                          </button>
+                        </li>
+                      ) : (
+                        <button
+                          onClick={() => navigate("/login")}
+                          className=" hover:bg-blue-600 hover:text-gray-300 border-blue-900 border-2 px-6 py-2 rounded-lg text-center "
+                        >
+                          Login
+                        </button>
                       )}
                       <Link to={"/cart"}>
-                      <div className="ml-4 flex lg:ml-6 ">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                          />
-                        </svg>
+                        <div className="ml-4 flex lg:ml-6 ">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                            />
+                          </svg>
 
-                        <span className="ml-2 text-sm font-medium text-pink-700">
-                          0
-                        </span>
-                        <span className="sr-only">items in cart, view bag</span>
-                      </div>
+                          <span className="ml-2 text-sm font-medium text-pink-700">
+                            0
+                          </span>
+                          <span className="sr-only">
+                            items in cart, view bag
+                          </span>
+                        </div>
                       </Link>
                     </ul>
                   </div>
@@ -192,13 +203,13 @@ const navigate = useNavigate()
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   stroke="currentColor"
-                  class="w-6 h-6"
+                  className="w-6 h-6"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
                   />
                 </svg>
@@ -206,27 +217,43 @@ const navigate = useNavigate()
               <ul className="md:flex lg:flex justify-evenly gap-10 items-center hidden">
                 {navItem.map((item) => (
                   <li key={item.slug}>
-                    <button onClick={ () =>navigate(item.slug)} className="hover:underline ">{item.name}</button>
+                    <button
+                      onClick={() => navigate(item.slug)}
+                      className="hover:underline "
+                    >
+                      {item.name}
+                    </button>
                   </li>
                 ))}
 
                 {adminItem.map((item) =>
                   item.active ? (
                     <li key={item.slug}>
-                      <button onClick={() => navigate(item.slug)} className="hover:underline ">{item.name}</button>
-                    </li>
-                  ) : null
-                )}
-
-                {authItem.map((item) =>
-                  !item.active ? (
-                    <li key={item.slug}>
-                      {" "}
-                      <button onClick={() => navigate(item.slug)} className=" hover:bg-blue-600 hover:text-gray-300 border-blue-900 border-2 px-6 py-2 rounded-lg text-center ">
+                      <button
+                        onClick={() => navigate(item.slug)}
+                        className="hover:underline "
+                      >
                         {item.name}
                       </button>
                     </li>
                   ) : null
+                )}
+                {authStatus ? (
+                  <li>
+                    <button
+                      onClick={logouthendel}
+                      className=" hover:bg-blue-600 hover:text-gray-300 border-blue-900 border-2 px-6 py-2 rounded-lg text-center "
+                    >
+                      Logout
+                    </button>
+                  </li>
+                ) : (
+                  <button
+                    onClick={() => navigate("/login")}
+                    className=" hover:bg-blue-600 hover:text-gray-300 border-blue-900 border-2 px-6 py-2 rounded-lg text-center "
+                  >
+                    Login
+                  </button>
                 )}
 
                 <Togglebtn togglechange={themechange} checked={themeMode} />

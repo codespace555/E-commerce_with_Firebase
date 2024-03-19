@@ -14,10 +14,10 @@ function Home() {
         </div>
         <Filter />
         <div className="container px-5 py-8 md:py-16 mx-auto">
-          <h1 class="sm:text-3xl text-2xl font-medium title-font my-5 text-gray-900 dark:text-gray-200">
+          <h1 className="sm:text-3xl text-2xl font-medium title-font my-5 text-gray-900 dark:text-gray-200">
             Our Latest Collection
           </h1>
-          <div class="h-1 w-30 bg-pink-600 rounded"></div>
+          {/* <div class="h-1 w-30 bg-pink-600 rounded"></div> */}
         </div>
         <div className="flex flex-wrap">
           <ProductCard />
@@ -37,17 +37,11 @@ function Home() {
           </h2>
 
           <div className="flex flex-wrap -m-4 border-pink-600 rounded-lg sm:rounded-none ">
-            <Testimonial name={"Naman Kumar"} />
+            <Testimonial name="Naman Kumar" />
             <Testimonial name="Ranjan Kumar" />
             <Testimonial name="Sahil Kumar" />
           </div>
         </div>
-
-
-
-
-
-
       </section>
     </Layout>
   );

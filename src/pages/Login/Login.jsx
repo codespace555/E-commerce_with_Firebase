@@ -4,23 +4,32 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Input } from "../../ButtonInput";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch } from "react-redux";
-import { loginauth } from "../../store/auth/authSlice";
 import { toast } from "react-toastify";
+import authfirebase from "../../firebase/auth/fireAuth";
 
 
 function Login() {
   const [error, setError] = useState("");
-  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const loginuser = async (data) => {
+    try {
+      const user = await authfirebase.login(data);
+      if (user){
+const user = await authfirebase.getCurrentUser()
+if(user){
+  navigate("/")
+}
+      }
     
    
+  }catch(err) {
+    console.log(err.message);
+    setError(err.message);
   };
 
-  const singupWithEmail = async () => {
-    
-  };
+}
+
 
   return (
     <>
@@ -55,12 +64,7 @@ function Login() {
             </Button>
           </form>
           <h1 className="mt-2 text-center text-base text-gray-200">or</h1>
-          <button
-            className="w-full mt-5 bg-gray-700 hover:bg-gray-600 flex p-3 items-center gap-2 justify-center rounded-lg dark:text-gray-200"
-            onClick={singupWithEmail}
-          >
-            <FcGoogle /> Singin with Google
-          </button>
+         
           {error && <p className=" text-red-500 text-center">{error}</p>}
           <p className="mt-2 text-center text-base text-gray-200">
             Don't have an account?
