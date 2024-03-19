@@ -86,10 +86,35 @@ class fireauth {
             email: users.email,
             time: this.date(),
           };
-          //   if (user) {
-          //     addDoc(this.collection, user);
-          //     console.log("User signed in with Google:", user);
-          //   }
+            if (user) {
+              addDoc(this.collection, user);
+              console.log("User signed in with Google:", user);
+            }
+          console.log("user allready exist", user);
+          data = user;
+        }
+      });
+      return data;
+    } catch (err) {
+      console.log("Firebase google provider error", err);
+      this.displayError(err.Firebase);
+    }
+  }
+
+  async loginBygoogle() {
+    let data = null;
+    try {
+      await signInWithPopup(this.auth, this.provider).then((userCredential) => {
+        // Signed in successfully
+        const users = userCredential.user;
+        if (users) {
+          const user = {
+            name: users.displayName,
+            uid: users.uid || "",
+            email: users.email,
+            time: this.date(),
+          };
+           
           console.log("user allready exist", user);
           data = user;
         }

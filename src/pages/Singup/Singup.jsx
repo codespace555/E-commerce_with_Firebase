@@ -4,31 +4,44 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import authfirebase from "../../firebase/auth/fireAuth";
-
-
+import GoogleSignIn from "../../ButtonInput/SignInWithGoogle/GoogleSignIn";
 
 function Singup() {
   const [error, setError] = useState("");
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
- 
 
   const signup = async (data) => {
     setError("");
     console.log(data);
     try {
-      const userData = await authfirebase.createUser(data.name,data.email,data.password);
+      const userData = await authfirebase.createUser(
+        data.name,
+        data.email,
+        data.password
+      );
       console.log(userData);
       if (userData) {
         const user = await authfirebase.getCurrentUser();
         console.log(user);
-
       }
     } catch (error) {
       console.log("error to create user" + error);
     }
   };
 
+  const singupWithEmail = async () => {
+    try {
+      authfirebase.createuserBygoogle().then((user) => {
+        if (user) {
+          navigate("/");
+        }
+      });
+    } catch (err) {
+      console.log("erreor google", err);
+      toast.error(authfirebase.displayError(err));
+    }
+  };
   return (
     <>
       <div className=" flex justify-center items-center h-screen">
@@ -76,6 +89,7 @@ function Singup() {
           </form>
           <h1 className="mt-2 text-center text-base text-gray-200">or</h1>
           {/* button */}
+          <GoogleSignIn singupWithEmail={singupWithEmail} />
           {error && <p className=" text-red-500 text-center">{error}</p>}
           <p className="mt-2 text-center text-base text-gray-200">
             Already have an account?

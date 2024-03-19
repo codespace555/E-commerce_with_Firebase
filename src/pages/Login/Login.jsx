@@ -6,7 +6,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import authfirebase from "../../firebase/auth/fireAuth";
-
+import GoogleSignIn from "../../ButtonInput/SignInWithGoogle/GoogleSignIn";
 
 function Login() {
   const [error, setError] = useState("");
@@ -15,21 +15,30 @@ function Login() {
   const loginuser = async (data) => {
     try {
       const user = await authfirebase.login(data);
-      if (user){
-const user = await authfirebase.getCurrentUser()
-if(user){
-  navigate("/")
-}
+      if (user) {
+        const user = await authfirebase.getCurrentUser();
+        if (user) {
+          navigate("/");
+        }
       }
-    
-   
-  }catch(err) {
-    console.log(err.message);
-    setError(err.message);
+    } catch (err) {
+      console.log(err.message);
+      setError(err.message);
+    }
   };
 
-}
-
+  const singupWithEmail = async () => {
+    try {
+      authfirebase.loginBygoogle().then((user) => {
+        if (user) {
+          navigate("/");
+        }
+      });
+    } catch (err) {
+      console.log("erreor google", err);
+      toast.error(authfirebase.displayError(err));
+    }
+  };
 
   return (
     <>
@@ -64,7 +73,8 @@ if(user){
             </Button>
           </form>
           <h1 className="mt-2 text-center text-base text-gray-200">or</h1>
-         
+          <GoogleSignIn  singupWithEmail ={singupWithEmail}/>
+
           {error && <p className=" text-red-500 text-center">{error}</p>}
           <p className="mt-2 text-center text-base text-gray-200">
             Don't have an account?
