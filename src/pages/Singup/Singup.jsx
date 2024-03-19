@@ -2,44 +2,19 @@ import React, { useState } from "react";
 import { Button, Input } from "../../ButtonInput";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import {
-  createUser,
-  createuserBygoogle,
-  getCurrentUser,
-} from "../../firebase/auth/auth";
 import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
+
 
 function Singup() {
   const [error, setError] = useState("");
   const { register, handleSubmit } = useForm();
   const signup = async (data) => {
-    setError("");
-    try {
-      const userData = await createUser(data);
-      if (userData) {
-        const user = await getCurrentUser();
-        if (user) {
-          navigate("/");
-        }
-      }
-    } catch (error) {
-      setError("something  went wrong! to create user");
-      toast.error(error.code);
-    }
+   
   };
 
   const singupWithEmail = async () => {
-    try {
-      const user = await createuserBygoogle();
-      console.log(user);
-      if (user) {
-        const user = await getCurrentUser();
-        if (user) {
-          navigate("/");
-        }
-      }
-    } catch (error) {}
+   
   };
   return (
     <>

@@ -2,46 +2,25 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Input } from "../../ButtonInput";
-import { createuserBygoogle, getCurrentUser, login } from "../../firebase/auth/auth";
 import { FcGoogle } from "react-icons/fc";
+import { useDispatch } from "react-redux";
+import { loginauth } from "../../store/auth/authSlice";
+import { toast } from "react-toastify";
+
 
 function Login() {
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const loginuser = async (data) => {
-    setError("");
-    try {
-      console.log(data);
-      const user = await login(data);
-      console.log(user);
-
-      if (user) {
-        localStorage.setItem("user", JSON.stringify(user));
-        getCurrentUser()
-        navigate("/");
-        console.log("login");
-      }
-    } catch (error) {
-      setError(error.message);
-      
-    }
+    
+   
   };
 
-  const singupWithEmail = async() =>{
-    setError("");
-    try {
-      const user = await createuserBygoogle()
-      if(user){
-        getCurrentUser()
-        navigate("/");
-      }
-      
-    } catch (error) {
-      setError(error.message);
-      
-    }
-  }
+  const singupWithEmail = async () => {
+    
+  };
 
   return (
     <>
@@ -76,7 +55,12 @@ function Login() {
             </Button>
           </form>
           <h1 className="mt-2 text-center text-base text-gray-200">or</h1>
-          <button className="w-full mt-5 bg-gray-700 hover:bg-gray-600 flex p-3 items-center gap-2 justify-center rounded-lg dark:text-gray-200" onClick={singupWithEmail}><FcGoogle /> Singup with Google</button>
+          <button
+            className="w-full mt-5 bg-gray-700 hover:bg-gray-600 flex p-3 items-center gap-2 justify-center rounded-lg dark:text-gray-200"
+            onClick={singupWithEmail}
+          >
+            <FcGoogle /> Singin with Google
+          </button>
           {error && <p className=" text-red-500 text-center">{error}</p>}
           <p className="mt-2 text-center text-base text-gray-200">
             Don't have an account?
