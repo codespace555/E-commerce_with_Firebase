@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import productsfiber from '../../firebase/product/productdb';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 function Allproducts() {
 const [products, setProducts] = useState([]);
+const navigate = useNavigate()
 
 
 React.useEffect(() => {
@@ -12,7 +14,7 @@ React.useEffect(() => {
     try {
       const response = await productsfiber.getProducts();
       setProducts(response);
-      console.log(products)
+      console.log(products.id)
     } catch (err) {
       console.error('Error getting products:   ', err);
     };
@@ -27,11 +29,12 @@ React.useEffect(() => {
     <div className='flex flex-wrap'>
   
    { products?.map((item,index) => {
-    return (<div className="p-4 md:w-1/4  drop-shadow-lg  " key={index}>
+    console.log(item.slug)
+    return (<Link to={`/poroductdetails/${item.slug}`} className="p-4 md:w-1/4  drop-shadow-lg  "  key={index} >
       
       <ProductCard title={item.title}  price={item.price} description={item.discription} imglink={item.imageurl} />
       
-    </div>)
+    </Link>)
 
    })
    

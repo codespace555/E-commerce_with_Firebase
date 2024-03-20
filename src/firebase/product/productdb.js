@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
 import { auth, fireDB, provider } from "../firebaseconfig";
 
 class product {
@@ -28,9 +28,11 @@ try {
 
     const products = querySnapshot.docs.map((doc) => {
         let data = doc.data();
-        return data
+        // Add id to the returned object
+        data.id = doc.id;
+        return data;
     })
-    console.log(products.map((item) => item.title))
+    console.log(products.map((item) => item))
     return products; 
     
 } catch (error) {
@@ -39,7 +41,32 @@ try {
 }
 
   }
+
+  async getProduct(productId) {
+    try {
+      const productQuery = query(this.collection, where("slug" ,"=="  ,productId));
+      const productSnapshot = await getDocs(productQuery);
+
+  
     
+        const ProductDoc = productSnapshot.docs.map((doc) => {
+            console.log(doc.id, " => ", doc.data());
+            return doc.data();
+        })
+        
+        return ProductDoc;
+     
+    } catch (error) {
+      console.error("Error getting product by ID: ", error);
+      throw error;
+    }
+  }
+
 }
+
+
+
+    
+
 const products = new product();
 export default products;

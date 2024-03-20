@@ -123,14 +123,14 @@ function Table() {
               {data?.map((item, index) => (
                 <tr
                   className="bg-gray-50 border-b  dark:border-gray-700 dark:text-gray-200 dark:bg-[#2e3137]"
-                 
+                 key={index}
                 >
                  
                   <td
                     className="px-6 py-4 text-black dark:text-gray-200 "
                     
                   >
-                    {index}
+                    {index+1}
                   </td>
                   <th
                     scope="row"

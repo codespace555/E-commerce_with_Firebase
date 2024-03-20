@@ -14,10 +14,11 @@ function ProductForm() {
     category: product ? "category" : "",
     imageurl: product ? "imageurl" : "",
     description: product ? "description" : "",
+    
   });
 
   const editProduct = () => {console.log("edit")};
-  const addproduct = async(data) => {
+  const addproduct = async({data}) => {
     try {
       productsfiber.addProduct(getValues());
       console.log("Added");

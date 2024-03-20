@@ -1,25 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Layout } from "../../components/components";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import products from "../../firebase/product/productdb";
 
 function ProductDetails() {
-    const { slug } = useParams();
+  const { slug } = useParams();
+  const navigate = useNavigate();
+  const [product, setProduct] = useState("");
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (slug) {
+        const post = await products.getProduct(slug);
+        console.log(post);
+        if (post) {
+          console.log(post)
+          setProduct(() => post);
+        } else {
+          navigate("/");
+        }
+      } else {
+        navigate("/");
+      }
+    };
+    fetchProduct()
+    
+  }, [slug,navigate]);
+  console.log(product[0].title)
+ 
   return (
     <Layout>
       <section className="text-gray-600 body-font overflow-hidden">
+
         <div className="container px-5 py-32 mx-auto">
-          <div className="lg:w-4/5 mx-auto flex flex-wrap">
+        <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img
               alt="ecommerce"
               className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-              src="https://dummyimage.com/400x400"
+              src=""
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
-                {slug}
+                
               </h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1 dark:text-gray-400">
-                The Catcher in the Rye
+                {product[0].title}
               </h1>
               <div className="flex mb-4">
                 <span className="flex items-center">
@@ -130,7 +154,7 @@ function ProductDetails() {
 
               <div className="flex">
                 <span className="title-font font-medium text-2xl text-gray-900 dark:text-gray-400">
-                ₹58.00
+                  ₹58.00
                 </span>
                 <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                   Add To Cart
