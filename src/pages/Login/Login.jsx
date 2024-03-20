@@ -6,10 +6,12 @@ import { toast } from "react-toastify";
 import authfirebase from "../../firebase/auth/fireAuth";
 import GoogleSignIn from "../../ButtonInput/SignInWithGoogle/GoogleSignIn";
 
+
 function Login() {
   const [error, setError] = useState("");
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
+
   const loginuser = async (data) => {
     try {
       const user = await authfirebase.login(data);
@@ -17,10 +19,10 @@ function Login() {
         const user = await authfirebase.getCurrentUser();
         if (user) {
           navigate("/");
-          toast.success(`Welcome ${user.displayName}`)
-          
+          toast.success(`Welcome Local`);
         }
       }
+      setError("Invalid email or password.");
     } catch (err) {
       console.log(err.message);
       setError(err.message);
@@ -73,7 +75,7 @@ function Login() {
             </Button>
           </form>
           <h1 className="mt-2 text-center text-base text-gray-200">or</h1>
-          <GoogleSignIn  singupWithEmail ={singupWithEmail}/>
+          <GoogleSignIn singupWithEmail={singupWithEmail} />
 
           {error && <p className=" text-red-500 text-center">{error}</p>}
           <p className="mt-2 text-center text-base text-gray-200">

@@ -65,7 +65,7 @@ class fireauth {
   async login({ email, password }) {
     try {
       const user = await signInWithEmailAndPassword(this.auth, email, password);
-      localStorage.setItem("token", JSON.stringify(user.token));
+      localStorage.setItem("token", JSON.stringify(user.st));
       return user;
     } catch (error) {
       console.log("Error on Login", error);

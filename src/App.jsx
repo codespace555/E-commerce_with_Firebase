@@ -16,7 +16,9 @@ function App() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      dispatch(loginauth(user.displayName));
+      if(user){
+        dispatch(loginauth(user.displayName));
+      }
     });
 
     return unsubscribe;
