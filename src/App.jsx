@@ -13,15 +13,15 @@ import { loginauth } from "./store/auth/authSlice";
 function App() {
   const themeMode = useSelector((state) => state.theme.themeMode);
   const dispatch = useDispatch();
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      dispatch(loginauth(user.displayName));
+      console.log(user);
+    }
+  });
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if(user){
-        dispatch(loginauth(user.displayName));
-      }
-    });
 
-    return unsubscribe;
   }, []);
 
   useEffect(() => {

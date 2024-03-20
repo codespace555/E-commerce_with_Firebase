@@ -129,6 +129,7 @@ class fireauth {
   async getCurrentUser() {
     const user = await this.auth.currentUser;
     if (user) {
+      console.log(user);
       return user;
     } else {
       this.logout();
