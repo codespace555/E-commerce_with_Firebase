@@ -15,33 +15,33 @@ function Singup() {
     setError("");
     console.log(data);
     try {
-      const userData = await authfirebase.createUser(
+      const user = await authfirebase.createUser(
         data.name,
         data.email,
         data.password
       );
-      console.log(userData);
-      if (userData) {
-        const user = await authfirebase.getCurrentUser();
+      
         if (user) {
           navigate("/");
-          console.log(user)
+          toast.success("Account created successfully!");
         }
-      }
+      
     } catch (error) {
-      console.log("error to create user" + error);
+      console.error("Error creating user: ", error);
+      setError("An error occurred while creating your account.");
     }
   };
 
   const singupWithEmail = async () => {
     try {
-      authfirebase.createuserBygoogle().then((user) => {
-        if (user) {
-          navigate("/");
-        }
-      });
+      authfirebase.createuserBygoogle
+      if (user) {
+        navigate("/");
+        toast.success("Account created successfully!");
+      }
     } catch (err) {
-      console.log("erreor google", err);
+      console.error("Error signing up with Google: ", error);
+      setError("An error occurred while signing up with Google.");
       
     }
   };

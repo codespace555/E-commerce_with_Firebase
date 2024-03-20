@@ -1,28 +1,46 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Footer, Navbar } from "./components/components";
-import { Outlet } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { Outlet, useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 
 import { auth } from "./firebase/firebaseconfig";
 import { onAuthStateChanged } from "firebase/auth";
-import { loginauth } from "./store/auth/authSlice";
+import { admin, loginauth, logoutauth } from "./store/auth/authSlice";
 
 function App() {
   const themeMode = useSelector((state) => state.theme.themeMode);
   const dispatch = useDispatch();
-  const unsubscribe = onAuthStateChanged(auth, (user) => {
-    if (user) {
-      dispatch(loginauth(user.displayName));
-      console.log(user);
-    }
-  });
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (user) => {
+        if (user) {
+          if (user?.email === "namansanjaykumar@gmail.com") {
+            dispatch(loginauth(user.email));
+            dispatch(admin());
+          } else {
+            navigate("/")
 
-  }, []);
+          }
+          dispatch(loginauth(user.email));
+          console.log(user.email);
+        } else {
+          dispatch(logoutauth());
+          console.log("User logged out");
+          navigate("/login")
+        }
+      },
+      (error) => {
+        console.error("Authentication error:", error);
+      }
+    );
+    return () => unsubscribe();
+  }, [dispatch]);
 
   useEffect(() => {
     document.querySelector("html").classList.remove("light", "dark");

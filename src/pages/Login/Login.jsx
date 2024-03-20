@@ -5,40 +5,41 @@ import { Button, Input } from "../../ButtonInput";
 import { toast } from "react-toastify";
 import authfirebase from "../../firebase/auth/fireAuth";
 import GoogleSignIn from "../../ButtonInput/SignInWithGoogle/GoogleSignIn";
-
+import { useDispatch } from "react-redux";
+import { loginauth } from "../../store/auth/authSlice";
 
 function Login() {
   const [error, setError] = useState("");
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const loginuser = async (data) => {
     try {
       const user = await authfirebase.login(data);
       if (user) {
-        const user = await authfirebase.getCurrentUser();
-        if (user) {
-          navigate("/");
-          toast.success(`Welcome Local`);
-        }
+        navigate("/");
+        toast.success(`Welcome Local`);
+      } else {
+        setError("Invalid email or password.");
       }
-      setError("Invalid email or password.");
     } catch (err) {
-      console.log(err.message);
-      setError(err.message);
+      console.error("Error logging in: ", err);
+      setError("An error occurred while logging in.");
     }
   };
 
   const singupWithEmail = async () => {
     try {
-      authfirebase.loginBygoogle().then((user) => {
+      const user = await authfirebase.loginBygoogle()
         if (user) {
           navigate("/");
+          toast.success(`Welcome, ${user.email}`);
         }
-      });
+      ;
     } catch (err) {
-      console.log("erreor google", err);
-      toast.error(authfirebase.displayError(err));
+      console.error("Error signing in with Google: ", err);
+      setError("An error occurred while signing in with Google.");
     }
   };
 

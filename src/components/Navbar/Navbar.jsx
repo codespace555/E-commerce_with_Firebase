@@ -15,14 +15,13 @@ function Navbar() {
   const themeMode = useSelector((state) => state.theme.themethemeMode);
   const authStatus = useSelector((state) => state.auth.status);
   const adminStatus = useSelector((state) => state.auth.admin);
-  const userData = useSelector((state) => state.auth.data)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
  
 
   // const navigate = useNavigate();
-console.log(userData);
+
   const themechange = () => {
     dispatch(darkTheme());
   };
@@ -188,7 +187,7 @@ console.log(userData);
         <header>
           <div className="flex justify-between h-10 items-center  bg-pink-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8 dark:text-white dark:bg-[#3e4042]">
             <span className="hidden md:block">Get free delivery on orders over ₹300 </span>
-            <span className="font-semibold text-xl">Welcome To Local {userData} <span></span></span>
+            <span className="font-semibold text-xl">Welcome To Local  <span></span></span>
             <Togglebtn togglechange={themechange} checked={themeMode} />
           </div>
           <nav className="flex justify-between items-center bg-gray-400 px-4 sm:px-6 lg:px-8 shadow-xl dark:text-white dark:bg-[#282c34] py-2">

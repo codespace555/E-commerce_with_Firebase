@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Input } from "../../../ButtonInput";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import productsfiber from "../../../firebase/product/productdb";
+import { toast } from "react-toastify";
 
 function ProductForm() {
   const products = useSelector((state) => state.auth.product);
@@ -15,7 +17,17 @@ function ProductForm() {
   });
 
   const editProduct = () => {console.log("edit")};
-  const addproduct = () => {console.log("add")};
+  const addproduct = async(data) => {
+    try {
+      productsfiber.addProduct(getValues());
+      console.log("Added");
+      toast.success(`${data.title} has been added!`);
+    } catch (error) {
+      alert(`Error adding item: ${error.message}`);
+      
+    }
+    
+  };
   return (
     <div>
       <form onSubmit={handleSubmit(product ? editProduct : addproduct)}>
@@ -60,8 +72,8 @@ function ProductForm() {
                 rows="10"
                 name="title"
                 className=" bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none"
-                placeholder="Product title"
-                defaultValue={getValues("description")}
+                placeholder="Product discription"
+                {...register("discription", { required: true })}
               ></textarea>
             </div>
             <div className=" flex justify-center mb-3">

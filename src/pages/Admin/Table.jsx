@@ -3,9 +3,14 @@ import { MdOutlineProductionQuantityLimits } from 'react-icons/md';
 import { FaUser, FaCartPlus } from 'react-icons/fa';
 import { AiFillShopping, AiFillPlusCircle, AiFillDelete } from 'react-icons/ai';
 import { Tab, Tabs, TabList,TabPanel } from 'react-tabs';
+import { useNavigate } from "react-router-dom";
+import productsfiber from "../../firebase/product/productdb";
 
 function Table() {
   let [isOpen, setIsOpen] = useState(false)
+  const navigate = useNavigate()
+  const [data,setData] = useState([])
+
 
   function closeModal() {
       setIsOpen(false)
@@ -14,6 +19,21 @@ function Table() {
   function openModal() {
       setIsOpen(true)
   }
+
+  React.useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const response = await productsfiber.getProducts();
+        setData(response);
+      } catch (err) {
+        console.error('Error getting products:   ', err);
+      };
+    };
+    // Call function to retrieve data from db
+    getProduct();
+    }, []);
+  
+
   return (
     <>
     <Tabs defaultIndex={0} className=" " >
@@ -67,7 +87,7 @@ function Table() {
               
             >
               {" "}
-              <div className="flex gap-2 items-center">
+              <div className="flex gap-2 items-center" onClick={() => navigate("/addproduct")}>
                 Add Product <FaCartPlus size={20} />
               </div>
             </button>
@@ -95,23 +115,22 @@ function Table() {
                     Category
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Date
-                  </th>
-                  <th scope="col" className="px-6 py-3">
                     Action
                   </th>
                 </tr>
               </thead>
               <tbody className="">
+              {data?.map((item, index) => (
                 <tr
                   className="bg-gray-50 border-b  dark:border-gray-700 dark:text-gray-200 dark:bg-[#2e3137]"
                  
                 >
+                 
                   <td
                     className="px-6 py-4 text-black dark:text-gray-200 "
                     
                   >
-                    1.
+                    {index}
                   </td>
                   <th
                     scope="row"
@@ -119,7 +138,7 @@ function Table() {
                   >
                     <img
                       className="w-16"
-                      src="https://dummyimage.com/720x400"
+                      src={item.imageurl}
                       alt="img"
                     />
                   </th>
@@ -127,25 +146,19 @@ function Table() {
                     className="px-6 py-4 text-black dark:text-gray-200 "
                    
                   >
-                    Title
+                    {item.title}
                   </td>
                   <td
                     className="px-6 py-4 text-black dark:text-gray-200 "
                    
                   >
-                    ₹100
+                    {item.price}
                   </td>
                   <td
                     className="px-6 py-4 text-black dark:text-gray-200 "
                     
                   >
-                    pots
-                  </td>
-                  <td
-                    className="px-6 py-4 text-black dark:text-gray-200 "
-                    
-                  >
-                    12 Aug 2019
+                    {item.category}
                   </td>
                   <td className="px-6 py-4">
                     <div className=" flex gap-2">
@@ -169,6 +182,7 @@ function Table() {
                             />
                           </svg>
                         </div>
+
                         <div>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -185,10 +199,12 @@ function Table() {
                             />
                           </svg>
                         </div>
+
                       </div>
                     </div>
                   </td>
                 </tr>
+                ))}
               </tbody>
             </table>
           </div>

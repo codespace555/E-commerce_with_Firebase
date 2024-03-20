@@ -45,7 +45,7 @@ class fireauth {
         password
       );
 
-      if (users) {
+   
         const user = {
           name: name,
           uid: users.user?.uid || "",
@@ -55,21 +55,22 @@ class fireauth {
 
         await addDoc(this.collection, user);
         console.log("user create  success!");
-        return this.login(email, password).then((data) => data);
-      }
+         this.login(email, password);
+         return user
+      
     } catch (error) {
-      console.log("firebase create user error ", error);
-      this.displayError(error);
+      console.error("Error creating user: ", error);
+      throw error;
     }
   }
   async login({ email, password }) {
     try {
-      const user = await signInWithEmailAndPassword(this.auth, email, password);
-      localStorage.setItem("token", JSON.stringify(user.st));
-      return user;
+      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+
+      return userCredential.user;
     } catch (error) {
-      console.log("Error on Login", error);
-      this.displayError(error);
+      console.error("Error logging in: ", error);
+      throw error;
     }
   }
 
@@ -95,9 +96,9 @@ class fireauth {
         }
       });
       return data;
-    } catch (err) {
-      console.log("Firebase google provider error", err);
-      this.displayError(err.Firebase);
+    } catch (error) {
+      console.error("Error signing in with Google: ", error);
+      throw error;
     }
   }
 
@@ -120,21 +121,30 @@ class fireauth {
         }
       });
       return data;
-    } catch (err) {
-      console.log("Firebase google provider error", err);
-      this.displayError(err.Firebase);
+    } catch (error) {
+      console.error("Error signing in with Google: ", error);
+      throw error;
     }
   }
 
   async getCurrentUser() {
-    const user = await this.auth.currentUser;
-    if (user) {
-      console.log(user);
-      return user;
-    } else {
-      this.logout();
-      console.log("user is logout");
-    }
+   try {
+     const user = await this.auth.currentUser;
+     if (user) {
+       console.log(user);
+       localStorage.setItem("token", JSON.stringify(user.accessToken));
+ 
+       return user;
+     } else {
+       this.logout();
+       console.log("user is logout");
+     }
+   
+   } catch (error) {
+    console.error("Error getting current user: ", error);
+      throw error;
+    
+   }
   }
 
   async logout() {
@@ -145,7 +155,7 @@ class fireauth {
         window.location.reload(); 
     }catch(error) {
         console.log("Log out Error", error);
-        this.displayError(error);
+        throw error;
     
   }
 }

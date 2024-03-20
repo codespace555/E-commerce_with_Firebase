@@ -5,7 +5,6 @@ import { createSlice } from "@reduxjs/toolkit";
     userData: "",
     admin:false,
     product:false,
-    data:""
   };
 
   const authSlice = createSlice({
@@ -15,7 +14,11 @@ import { createSlice } from "@reduxjs/toolkit";
       loginauth: (state, action) => {
         state.status = true;
         state.userData = action.payload.userData;
-        state.data=action.payload
+        console.log(action.userData)
+      
+      },
+      admin:(state)=>{
+          state.admin=true
       },
       logoutauth: (state) => {
         state.status = false;
@@ -23,6 +26,6 @@ import { createSlice } from "@reduxjs/toolkit";
       },
     },
   });
-  export const { loginauth, logoutauth } = authSlice.actions;
+  export const { loginauth, logoutauth, admin} = authSlice.actions;
   
   export default authSlice.reducer;

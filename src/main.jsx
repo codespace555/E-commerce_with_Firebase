@@ -20,6 +20,7 @@ import {
   EditProduct,
 } from "./pages/pages.js";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import AdminLayout from "./pages/Admin/AdminLayout.jsx";
 
 
 const router = createBrowserRouter([
@@ -65,11 +66,18 @@ const router = createBrowserRouter([
       },
       {
         path: "/addproduct",
-        element: <Addproduct />,
+        element: 
+        <AdminLayout authentication = {true} >
+          <Addproduct />
+        </AdminLayout>
+        
       },
       {
         path: "/editproduct/:slug",
-        element: <EditProduct />,
+        element:
+        <AdminLayout authentication = {true} >
+        <EditProduct />
+        </AdminLayout>
       },
     ],
   },
