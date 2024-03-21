@@ -10,17 +10,17 @@ const navigate = useNavigate()
 
 
 React.useEffect(() => {
-  const getProduct = async () => {
+  const getProducts = async () => {
     try {
       const response = await productsfiber.getProducts();
       setProducts(response);
-      console.log(products.id)
+      console.log(products)
     } catch (err) {
       console.error('Error getting products:   ', err);
     };
   };
   // Call function to retrieve data from db
-  getProduct();
+  getProducts();
   }, []);
 
 
