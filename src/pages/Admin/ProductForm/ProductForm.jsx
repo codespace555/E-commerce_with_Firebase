@@ -5,15 +5,17 @@ import { useSelector } from "react-redux";
 import productsfiber from "../../../firebase/product/productdb";
 import { toast } from "react-toastify";
 
-function ProductForm() {
+function ProductForm({productitem}) {
   const products = useSelector((state) => state.auth.product);
   const [product, setProduct] = useState(products);
   const { register, handleSubmit, setValue, getValues } = useForm({
-    title: product ? "title" : "",
-    price: product ? "price" : "",
-    category: product ? "category" : "",
-    imageurl: product ? "imageurl" : "",
-    description: product ? "description" : "",
+    defaultValues:{ 
+      title: productitem?.title || "",
+    price: productitem?.price || "",
+    category: productitem?.category || "",
+    imageurl: productitem?.imageurl || "",
+    description: productitem?.description || ""
+  },
     
   });
 
@@ -31,12 +33,12 @@ function ProductForm() {
   };
   return (
     <div>
-      <form onSubmit={handleSubmit(product ? editProduct : addproduct)}>
+      <form onSubmit={handleSubmit(productitem ? editProduct : addproduct)}>
         <div className=" flex justify-center items-center h-screen">
           <div className=" bg-gray-800 px-10 py-10 rounded-xl ">
             <div className="">
               <h1 className="text-center text-white text-xl mb-4 font-bold">
-                {product ? "Update Product" : "Add Product"}
+                {productitem ? "Update Product" : "Add Product"}
               </h1>
             </div>
             <div>
@@ -82,7 +84,7 @@ function ProductForm() {
                 className=" bg-yellow-500 w-full text-black font-bold  px-2 py-2 rounded-lg"
                 type="submit"
               >
-                {product ? " Update Product" : "Add new product"}
+                {productitem ? " Update Product" : "Add new product"}
               </button>
             </div>
           </div>
