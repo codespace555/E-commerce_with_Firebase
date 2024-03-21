@@ -6,15 +6,14 @@ import products from "../../firebase/product/productdb";
 function ProductDetails() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const [product, setProduct] = useState("");
+  const [product, setProduct] = useState([]);
   useEffect(() => {
     const fetchProduct = async () => {
       if (slug) {
         const post = await products.getProduct(slug);
-        console.log(post);
         if (post) {
           console.log(post)
-          setProduct(() => post);
+         setProduct(...post)
         } else {
           navigate("/");
         }
@@ -25,7 +24,8 @@ function ProductDetails() {
     fetchProduct()
     
   }, [slug,navigate]);
-  console.log(product[0].title)
+//  const test = product.map((item)=> item)
+  console.log(product.title)
  
   return (
     <Layout>
@@ -36,14 +36,14 @@ function ProductDetails() {
             <img
               alt="ecommerce"
               className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-              src=""
+              src={product.imageurl}
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
                 
               </h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1 dark:text-gray-400">
-                {product[0].title}
+                {product.title}
               </h1>
               <div className="flex mb-4">
                 <span className="flex items-center">
@@ -144,17 +144,12 @@ function ProductDetails() {
                 </span>
               </div>
               <p className="leading-relaxed border-b-2 mb-5 pb-5 dark:text-gray-400">
-                Fam locavore kickstarter distillery. Mixtape chillwave tumeric
-                sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo
-                juiceramps cornhole raw denim forage brooklyn. Everyday carry +1
-                seitan poutine tumeric. Gastropub blue bottle austin listicle
-                pour-over, neutra jean shorts keytar banjo tattooed umami
-                cardigan.
+                {product.discription}
               </p>
 
               <div className="flex">
                 <span className="title-font font-medium text-2xl text-gray-900 dark:text-gray-400">
-                  ₹58.00
+                  ₹{product.price}
                 </span>
                 <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                   Add To Cart
