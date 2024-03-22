@@ -6,7 +6,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth, fireDB, provider } from "../firebaseconfig";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDocs, orderBy, query } from "firebase/firestore";
 
 class fireauth {
   auth;
@@ -161,7 +161,8 @@ class fireauth {
 
   async getUsers() {
     try {
-      const querySnapshot = await getDocs(this.collection);
+      const productQuery = query(this.collection, orderBy("time"));
+      const querySnapshot = await getDocs(productQuery);
 
       const users = querySnapshot.docs.map((doc) => {
         let data = doc.data();
@@ -169,7 +170,7 @@ class fireauth {
         data.id = doc.id;
         return data;
       });
-      console.log(users.map((item) => item));
+      // console.log(users.map((item) => item));
       return users;
     } catch (error) {
       console.error("Error getting products: ", error);

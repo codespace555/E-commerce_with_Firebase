@@ -5,11 +5,13 @@ import { AiFillShopping, AiFillPlusCircle, AiFillDelete } from "react-icons/ai";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useNavigate } from "react-router-dom";
 import productsfiber from "../../firebase/product/productdb";
+import authfirebase from "../../firebase/auth/fireAuth";
 
 function Table() {
   let [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [allUser, setAllUser] = useState([]);
 
   function closeModal() {
     setIsOpen(false);
@@ -31,6 +33,24 @@ function Table() {
     // Call function to retrieve data from db
     getProduct();
   }, []);
+
+  React.useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const response = await authfirebase.getUsers();
+        setAllUser(response);
+        console.log(response);
+      } catch (err) {
+        console.error("Error getting products:   ", err);
+      }
+    };
+    // Call function to retrieve data from db
+    getUsers();
+  }, []);
+
+
+
+
 
   return (
     <>
@@ -291,14 +311,9 @@ function Table() {
                   <th scope="col" className="px-6 py-3 dark:text-gray-200">
                     Name
                   </th>
+                
                   <th scope="col" className="px-6 py-3 dark:text-gray-200">
-                    Address
-                  </th>
-                  <th scope="col" className="px-6 py-3 dark:text-gray-200">
-                    Pincode
-                  </th>
-                  <th scope="col" className="px-6 py-3 dark:text-gray-200">
-                    Phone Number
+                    uid
                   </th>
                   <th scope="col" className="px-6 py-3 dark:text-gray-200">
                     Email
@@ -309,29 +324,25 @@ function Table() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="bg-gray-50 border-b  dark:border-gray-700 dark:bg-[#2e3137] dark:text-gray-200">
+
+               {allUser?.map((item,index) => (<tr className="bg-gray-50 border-b  dark:border-gray-700 dark:bg-[#2e3137] dark:text-gray-200" key={index}>
                   <td className="px-6 py-4 text-black dark:text-gray-200">
-                    1.
+                    {index+1}
                   </td>
                   <td className="px-6 py-4 text-black dark:text-gray-200">
-                    Name
+                    {item.name}
                   </td>
                   <td className="px-6 py-4 text-black dark:text-gray-200">
-                    Address
+                    {item.uid}
                   </td>
                   <td className="px-6 py-4 text-black dark:text-gray-200">
-                    181919
+                  {item.email}
                   </td>
                   <td className="px-6 py-4 text-black dark:text-gray-200">
-                    1991818818
+                    {item.time}
                   </td>
-                  <td className="px-6 py-4 text-black dark:text-gray-200">
-                    kkk@gmail.com
-                  </td>
-                  <td className="px-6 py-4 text-black dark:text-gray-200">
-                    12 Aug 2019
-                  </td>
-                </tr>
+                </tr>))}
+
               </tbody>
             </table>
           </div>

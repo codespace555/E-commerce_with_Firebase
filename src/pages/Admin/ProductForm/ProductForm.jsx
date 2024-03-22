@@ -4,17 +4,20 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import productsfiber from "../../../firebase/product/productdb";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function ProductForm({productitem}) {
   const products = useSelector((state) => state.auth.product);
   const [product, setProduct] = useState(products);
+  const navigate = useNavigate()
   const { register, handleSubmit, setValue, getValues } = useForm({
     defaultValues:{ 
       title: productitem?.title || "",
     price: productitem?.price || "",
     category: productitem?.category || "",
     imageurl: productitem?.imageurl || "",
-    discription: productitem?.discription || ""
+    discription: productitem?.discription || "",
+    slug: productitem?.slug ||  ""
   },
     
   });
@@ -24,7 +27,8 @@ function ProductForm({productitem}) {
     try {
       productsfiber.addProduct(getValues());
       console.log("Added");
-      toast.success(`${data.title} has been added!`);
+      toast.success(`product has been added!`);
+      navigate("/dashboard")
     } catch (error) {
       alert(`Error adding item: ${error.message}`);
       
@@ -62,6 +66,7 @@ function ProductForm({productitem}) {
                 {...register("imageurl", { required: true })}
               />
             </div>
+           
             <div>
               <Input
                 placeholder="Category"

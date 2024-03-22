@@ -13,8 +13,7 @@ class product {
       if (auth.currentUser == null) {
         await auth.signInWithPopup(provider);
       }
-      const result = await addDoc(this.collection, productData);
-      console.log(result.id);
+      const result = await addDoc(this.collection, {...productData , slug:productData.title.replace(/ /g,"-").toLowerCase()});
       return result.id;
     } catch (error) {
       console.error("Error adding product: ", error);
@@ -32,7 +31,7 @@ try {
         data.id = doc.id;
         return data;
     })
-    console.log(products.map((item) => item))
+    // console.log(products.map((item) => item))
     return products; 
     
 } catch (error) {

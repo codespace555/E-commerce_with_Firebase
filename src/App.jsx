@@ -21,21 +21,17 @@ function App() {
       (user) => {
         if (user) {
           if (user?.email === "namansanjaykumar@gmail.com") {
-            dispatch(loginauth({user:user.email,userimg:user.photoURL}));
-          console.log(user);
+            dispatch(loginauth({ user: user.email, userimg: user.photoURL }));
 
             dispatch(admin());
           } else {
-            navigate("/")
-
+            navigate("/");
           }
-          dispatch(loginauth({user:user.email,userimg:user.photoURL}));
-          
-          console.log(user.email);
+          dispatch(loginauth({ user: user.email, userimg: user.photoURL }));
         } else {
           dispatch(logoutauth());
-          console.log("User logged out");
-          navigate("/login")
+
+          navigate("/login");
         }
       },
       (error) => {

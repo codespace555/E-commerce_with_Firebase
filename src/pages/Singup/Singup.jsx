@@ -34,7 +34,7 @@ function Singup() {
 
   const singupWithEmail = async () => {
     try {
-      authfirebase.createuserBygoogle
+      authfirebase.createuserBygoogle()
       if (user) {
         navigate("/");
         toast.success("Account created successfully!");
