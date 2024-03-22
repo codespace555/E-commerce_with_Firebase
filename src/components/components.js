@@ -7,6 +7,7 @@ import Testimonial from "./Testimonial/Testimonial";
 import DisplayOffer from "./Displayoffer/DisplayOffer";
 import CartItem from "./CartItem/CartItem";
 import AddressPop from "./AddressPop/AddressPop";
+import Loder from "./Loder/Loder";
 
 export {
   Footer,
@@ -17,5 +18,6 @@ export {
   Testimonial,
   DisplayOffer,
   CartItem,
-  AddressPop
+  AddressPop,
+  Loder
 };

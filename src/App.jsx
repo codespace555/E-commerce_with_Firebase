@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Footer, Navbar } from "./components/components";
+import { Footer, Loder, Navbar } from "./components/components";
 import { Outlet, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -14,6 +14,7 @@ function App() {
   const themeMode = useSelector((state) => state.theme.themeMode);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(
@@ -22,7 +23,7 @@ function App() {
         if (user) {
           if (user?.email === "namansanjaykumar@gmail.com") {
             dispatch(loginauth({ user: user.email, userimg: user.photoURL }));
-
+setUser(user)
             dispatch(admin());
           } else {
             navigate("/");
@@ -46,6 +47,7 @@ function App() {
     document.querySelector("html").classList.add(themeMode);
   }, [themeMode]);
   return (
+    user?
     <>
       <div className="dark:bg-slate-800 bg-slate-400 h-auto">
         <Navbar />
@@ -54,6 +56,7 @@ function App() {
         <ToastContainer />
       </div>
     </>
+    :<div> <Loder/></div>
   );
 }
 
