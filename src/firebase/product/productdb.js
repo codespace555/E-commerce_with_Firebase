@@ -10,9 +10,7 @@ class product {
 
   async addProduct(productData) {
     try {
-      if (auth.currentUser == null) {
-        await auth.signInWithPopup(provider);
-      }
+      
       const result = await addDoc(this.collection, {...productData , slug:productData.title.replace(/ /g,"-").toLowerCase()});
       return result.id;
     } catch (error) {
@@ -50,7 +48,7 @@ try {
     
         const ProductDoc = productSnapshot.docs.map((doc) => {
             console.log(doc.id, " => ", doc.data());
-            return doc.data();
+            return {...doc.data(), id : doc.id};
         })
         
         return ProductDoc;
@@ -59,6 +57,17 @@ try {
       console.error("Error getting product by ID: ", error);
       throw error;
     }
+  }
+
+ editProduct =  async (product,id) =>{
+    try {
+      
+      await setDoc(doc(this.collection,id), product);
+    
+    } catch (error) {
+      console.log("error on edit product" ,error)
+    }
+
   }
 
 }

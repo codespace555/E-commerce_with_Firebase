@@ -14,8 +14,8 @@ function EditProduct() {
       if (slug) {
         const post = await products.getProduct(slug);
         if (post) {
-          console.log(post)
           setProductsitem(...post)
+          console.log(productsitem)
         } else {
           navigate("/");
         }

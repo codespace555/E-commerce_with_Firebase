@@ -22,7 +22,17 @@ function ProductForm({productitem}) {
     
   });
 
-  const editProduct = () => {console.log("edit")};
+  const editProduct = async() => {
+    if(productitem){
+      await productsfiber.editProduct(getValues(),productitem.id).then(()=>{
+        toast("Product Updated Successfully");
+        navigate("/dashboard")
+      })
+    }
+
+
+
+  };
   const addproduct = async({data}) => {
     try {
       productsfiber.addProduct(getValues());
