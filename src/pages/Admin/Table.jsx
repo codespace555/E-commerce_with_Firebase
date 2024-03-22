@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { FaUser, FaCartPlus } from "react-icons/fa";
 import { AiFillShopping, AiFillPlusCircle, AiFillDelete } from "react-icons/ai";
@@ -6,6 +6,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useNavigate } from "react-router-dom";
 import productsfiber from "../../firebase/product/productdb";
 import authfirebase from "../../firebase/auth/fireAuth";
+import { toast } from "react-toastify";
 
 function Table() {
   let [isOpen, setIsOpen] = useState(false);
@@ -21,18 +22,6 @@ function Table() {
     setIsOpen(true);
   }
 
-  React.useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const response = await productsfiber.getProducts();
-        setData(response);
-      } catch (err) {
-        console.error("Error getting products:   ", err);
-      }
-    };
-    // Call function to retrieve data from db
-    getProduct();
-  }, []);
 
   React.useEffect(() => {
     const getUsers = async () => {
@@ -47,6 +36,30 @@ function Table() {
     // Call function to retrieve data from db
     getUsers();
   }, []);
+
+  const deleteProducts = useCallback( async (id) => {
+    try {
+     await productsfiber.deleteProduct(id);
+      toast("Product deleted Successfully");
+     
+    } catch (err) {
+      console.error("Error getting products:   ", err);
+    }
+  },[setData]);
+
+  React.useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const response = await productsfiber.getProducts();
+        setData(response);
+      } catch (err) {
+        console.error("Error getting products:   ", err);
+      }
+    };
+    getProduct();
+  }, [data.length]);
+  
+
 
 
 
@@ -159,6 +172,7 @@ function Table() {
                       <td className="px-6 py-4">
                         <div className=" flex gap-2">
                           <div className=" flex gap-2 cursor-pointer text-black dark:text-gray-200 ">
+                             <button onClick={() => deleteProducts(item.id)}>
                             <div>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -175,6 +189,7 @@ function Table() {
                                 />
                               </svg>
                             </div>
+                            </button>
                             <button onClick={() => navigate(`/editproduct/${item.slug}`)}>
                               <div>
                                 <svg

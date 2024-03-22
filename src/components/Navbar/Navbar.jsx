@@ -26,7 +26,6 @@ function Navbar() {
   const themechange = () => {
     dispatch(darkTheme());
   };
-  console.log(userData);
   const adminItem = [
     {
       name: "Admin",

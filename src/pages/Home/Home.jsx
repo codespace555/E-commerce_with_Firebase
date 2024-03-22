@@ -19,7 +19,7 @@ function Home() {
           </h1>
           {/* <div class="h-1 w-30 bg-pink-600 rounded"></div> */}
         </div>
-        <div className="flex flex-wrap justify-evenly">
+        <div className="flex flex-wrap justify-around gap-6">
           <ProductCard />
           <ProductCard />
           <ProductCard />

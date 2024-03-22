@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from "firebase/firestore";
 import { auth, fireDB, provider } from "../firebaseconfig";
 
 class product {
@@ -70,7 +70,18 @@ try {
 
   }
 
+  deleteProduct = async(id)=>{
+    try {
+      const productRef=doc(this.collection,id);
+      await deleteDoc(productRef);
+      return 'deleted';
+    } catch (error) {
+      console.log('Erro ao deletar o produto',error);
+    }
+  }
+
 }
+
 
 
 
