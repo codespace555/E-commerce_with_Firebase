@@ -2,8 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
  const initialState = {
     status: false,
-    userData: "",
+    userData: null,
     admin:false,
+    userImg: ""
     
   };
 
@@ -14,7 +15,8 @@ import { createSlice } from "@reduxjs/toolkit";
       loginauth: (state, action) => {
         state.status = true;
         state.userData = action.payload.userData;
-        console.log(action.userData)
+        state.userImg = action.payload.userimg
+      
       
       },
       admin:(state)=>{

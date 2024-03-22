@@ -14,7 +14,7 @@ function ProductForm({productitem}) {
     price: productitem?.price || "",
     category: productitem?.category || "",
     imageurl: productitem?.imageurl || "",
-    description: productitem?.description || ""
+    discription: productitem?.discription || ""
   },
     
   });

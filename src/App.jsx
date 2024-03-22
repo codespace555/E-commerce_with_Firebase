@@ -21,13 +21,16 @@ function App() {
       (user) => {
         if (user) {
           if (user?.email === "namansanjaykumar@gmail.com") {
-            dispatch(loginauth(user.email));
+            dispatch(loginauth({user:user.email,userimg:user.photoURL}));
+          console.log(user);
+
             dispatch(admin());
           } else {
             navigate("/")
 
           }
-          dispatch(loginauth(user.email));
+          dispatch(loginauth({user:user.email,userimg:user.photoURL}));
+          
           console.log(user.email);
         } else {
           dispatch(logoutauth());

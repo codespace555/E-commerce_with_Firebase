@@ -45,19 +45,17 @@ class fireauth {
         password
       );
 
-   
-        const user = {
-          name: name,
-          uid: users.user?.uid || "",
-          email: users.user?.email,
-          time: this.date(),
-        };
+      const user = {
+        name: name,
+        uid: users.user?.uid || "",
+        email: users.user?.email,
+        time: this.date(),
+      };
 
-        await addDoc(this.collection, user);
-        console.log("user create  success!");
-         this.login(email, password);
-         return user
-      
+      await addDoc(this.collection, user);
+      console.log("user create  success!");
+      this.login(email, password);
+      return user;
     } catch (error) {
       console.error("Error creating user: ", error);
       throw error;
@@ -65,7 +63,11 @@ class fireauth {
   }
   async login({ email, password }) {
     try {
-      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      );
 
       return userCredential.user;
     } catch (error) {
@@ -87,10 +89,10 @@ class fireauth {
             email: users.email,
             time: this.date(),
           };
-            if (user) {
-              addDoc(this.collection, user);
-              console.log("User signed in with Google:", user);
-            }
+          if (user) {
+            addDoc(this.collection, user);
+            console.log("User signed in with Google:", user);
+          }
           console.log("user allready exist", user);
           data = user;
         }
@@ -115,7 +117,7 @@ class fireauth {
             email: users.email,
             time: this.date(),
           };
-           
+
           console.log("user allready exist", user);
           data = user;
         }
@@ -128,37 +130,52 @@ class fireauth {
   }
 
   async getCurrentUser() {
-   try {
-     const user = await this.auth.currentUser;
-     if (user) {
-       console.log(user);
-       localStorage.setItem("token", JSON.stringify(user.accessToken));
- 
-       return user;
-     } else {
-       this.logout();
-       console.log("user is logout");
-     }
-   
-   } catch (error) {
-    console.error("Error getting current user: ", error);
+    try {
+      const user = await this.auth.currentUser;
+      if (user) {
+        console.log(user);
+        localStorage.setItem("token", JSON.stringify(user.accessToken));
+
+        return user;
+      } else {
+        this.logout();
+        console.log("user is logout");
+      }
+    } catch (error) {
+      console.error("Error getting current user: ", error);
       throw error;
-    
-   }
+    }
   }
 
   async logout() {
     try {
-        await signOut(this.auth)
-      
-        localStorage.removeItem("token");
-        window.location.reload(); 
-    }catch(error) {
-        console.log("Log out Error", error);
-        throw error;
-    
+      await signOut(this.auth);
+
+      localStorage.removeItem("token");
+      window.location.reload();
+    } catch (error) {
+      console.log("Log out Error", error);
+      throw error;
+    }
   }
-}
+
+  async getUsers() {
+    try {
+      const querySnapshot = await getDocs(this.collection);
+
+      const users = querySnapshot.docs.map((doc) => {
+        let data = doc.data();
+        // Add id to the returned object
+        data.id = doc.id;
+        return data;
+      });
+      console.log(users.map((item) => item));
+      return users;
+    } catch (error) {
+      console.error("Error getting products: ", error);
+      throw error;
+    }
+  }
 }
 
 const authfirebase = new fireauth();

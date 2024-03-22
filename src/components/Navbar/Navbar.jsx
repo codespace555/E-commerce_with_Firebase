@@ -15,17 +15,18 @@ function Navbar() {
   const themeMode = useSelector((state) => state.theme.themethemeMode);
   const authStatus = useSelector((state) => state.auth.status);
   const adminStatus = useSelector((state) => state.auth.admin);
+  const userData = useSelector((state) => state.auth.userImg);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
- 
 
   // const navigate = useNavigate();
 
   const themechange = () => {
     dispatch(darkTheme());
   };
-  console.log(authStatus);
+  console.log(userData);
   const adminItem = [
     {
       name: "Admin",
@@ -50,13 +51,9 @@ function Navbar() {
   ];
 
   const logouthendel = async () => {
-    
-    await authfirebase
-      .logout()
-      
-        dispatch(logoutauth(null));
+    await authfirebase.logout();
 
-     
+    dispatch(logoutauth(null));
   };
 
   return (
@@ -122,9 +119,7 @@ function Navbar() {
                         item.active ? (
                           <li key={item.slug}>
                             <button
-                              onClick={() =>
-                                 navigate(item.slug)
-                              }
+                              onClick={() => navigate(item.slug)}
                               className="hover:underline "
                             >
                               {item.name}
@@ -186,16 +181,16 @@ function Navbar() {
         {/* desktop */}
         <header>
           <div className="flex justify-between h-10 items-center  bg-pink-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8 dark:text-white dark:bg-[#3e4042]">
-            <span className="hidden md:block">Get free delivery on orders over ₹300 </span>
-            <span className="font-semibold text-xl">Welcome To Local  <span></span></span>
+            <span className="hidden md:block">
+              Get free delivery on orders over ₹300{" "}
+            </span>
+            <span className="font-semibold text-xl">
+              Welcome To Local <span></span>
+            </span>
             <Togglebtn togglechange={themechange} checked={themeMode} />
           </div>
-          <nav className="flex justify-between items-center bg-gray-400 px-4 sm:px-6 lg:px-8 shadow-xl dark:text-white dark:bg-[#282c34] py-2">
-            <div>
-              <Logo />
-            </div>
-            <div>
-              <button
+          <nav className="flex  items-center bg-gray-400 px-4 sm:px-6 lg:px-8 shadow-xl dark:text-white dark:bg-[#282c34] py-2 w-full gap-5 justify-between">
+          <button
                 type="button"
                 className="rounded-md bg-white p-2 text-gray-400 md:hidden lg:hidden dark:bg-[#505257]"
                 onClick={() => setOpen(true)}
@@ -216,7 +211,13 @@ function Navbar() {
                   />
                 </svg>
               </button>
-              <ul className="md:flex lg:flex justify-evenly gap-10 items-center hidden">
+            <div className="flex gap-20  w-full">
+            <div>
+              <Logo />
+            </div>
+              
+              <ul className="md:flex lg:flex md:justify-between lg:justify-between gap-20 items-center hidden w-full  ">
+                <div className="flex justify-around gap-5">
                 {navItem.map((item) => (
                   <li key={item.slug}>
                     <button
@@ -240,6 +241,8 @@ function Navbar() {
                     </li>
                   ) : null
                 )}
+</div>
+                <div className="flex items-center justify-around gap-5">
                 {authStatus ? (
                   <li>
                     <button
@@ -258,9 +261,9 @@ function Navbar() {
                   </button>
                 )}
 
-                
+               
                 <Link to={"/cart"}>
-                  <div className="ml-4 flex lg:ml-6 ">
+                  <div className=" flex">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -282,9 +285,22 @@ function Navbar() {
                     <span className="sr-only">items in cart, view bag</span>
                   </div>
                 </Link>
-                
+                </div>
+
               </ul>
+              
             </div>
+            <div className="flex-shrink-0">
+                  <img
+                    className="h-10 w-10 rounded-full"
+                    src={
+                      userData
+                        ? userData
+                        : "https://img.freepik.com/premium-vector/social-avatar-stories-gradient-frame_41737-3.jpg"
+                    }
+                    alt=""
+                  />
+                </div>
           </nav>
         </header>
       </div>
