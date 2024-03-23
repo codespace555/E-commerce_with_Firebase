@@ -8,6 +8,7 @@ import DisplayOffer from "./Displayoffer/DisplayOffer";
 import CartItem from "./CartItem/CartItem";
 import AddressPop from "./AddressPop/AddressPop";
 import Loder from "./Loder/Loder";
+import SlideImg from "./Slide/SlideImg";
 
 export {
   Footer,
@@ -19,5 +20,6 @@ export {
   DisplayOffer,
   CartItem,
   AddressPop,
-  Loder
+  Loder,
+  SlideImg
 };

@@ -14,7 +14,7 @@ function App() {
   const themeMode = useSelector((state) => state.theme.themeMode);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(
@@ -23,7 +23,7 @@ function App() {
         if (user) {
           if (user?.email === "namansanjaykumar@gmail.com") {
             dispatch(loginauth({ user: user.email, userimg: user.photoURL }));
-setUser(user)
+
             dispatch(admin());
           } else {
             navigate("/");
@@ -47,7 +47,7 @@ setUser(user)
     document.querySelector("html").classList.add(themeMode);
   }, [themeMode]);
   return (
-    user?
+   
     <>
       <div className="dark:bg-slate-800 bg-slate-400 h-auto">
         <Navbar />
@@ -56,7 +56,7 @@ setUser(user)
         <ToastContainer />
       </div>
     </>
-    :<div> <Loder/></div>
+  
   );
 }
 
