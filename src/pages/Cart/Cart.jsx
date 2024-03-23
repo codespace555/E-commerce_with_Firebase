@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { AddressPop, CartItem, Layout } from "../../components/components";
-import products from "../../firebase/product/productdb";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 function Cart() {
   const cartitem = useSelector(state => state.cart);
-  
-
-
-
   return (
     <Layout>
       <div className="h-auto bg-gray-100 pt-5 dark:bg-[#282c34] ">
@@ -28,13 +22,8 @@ function Cart() {
               ))
             }
             </>
-           
-
           }
-            
-
           </div>
-
           <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3 dark:bg-[#202122] dark:text-gray-200">
             <div className="mb-2 flex justify-between">
               <p className="text-gray-700 dark:text-gray-200">Subtotal</p>
