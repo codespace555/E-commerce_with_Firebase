@@ -1,6 +1,8 @@
 import React from "react";
+import {  useNavigate } from "react-router-dom";
 
-function CartItem({title, image, price,describe}) {
+function CartItem({title, image, price,describe,slug}) {
+const navigate = useNavigate()
 
  
   return (
@@ -15,7 +17,7 @@ function CartItem({title, image, price,describe}) {
           <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
             <div className="mt-5 sm:mt-0">
               <h2 className="text-lg font-bold text-gray-900 dark:text-gray-300">
-                {title||"This is title"}
+               <p onClick={() => navigate(`/poroductdetails/${slug}`)}> {title||"This is title"}</p>
               </h2>
               <h2 className="text-sm  text-gray-900 dark:text-gray-300">
                 {describe||"Description"}

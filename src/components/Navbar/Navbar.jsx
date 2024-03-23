@@ -16,6 +16,7 @@ function Navbar() {
   const authStatus = useSelector((state) => state.auth.status);
   const adminStatus = useSelector((state) => state.auth.admin);
   const userData = useSelector((state) => state.auth.userImg);
+  const cartItems = useSelector((state) => state.cart)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -162,7 +163,7 @@ function Navbar() {
                           </svg>
 
                           <span className="ml-2 text-sm font-medium text-pink-700">
-                            0
+                          {cartItems.length}
                           </span>
                           <span className="sr-only">
                             items in cart, view bag
@@ -279,7 +280,7 @@ function Navbar() {
                     </svg>
 
                     <span className="ml-2 text-sm font-medium text-pink-700">
-                      0
+                      {cartItems.length}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </div>

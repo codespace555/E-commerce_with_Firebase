@@ -1,17 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AddressPop, CartItem, Layout } from "../../components/components";
+import products from "../../firebase/product/productdb";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
+  const cartitem = useSelector(state => state.cart);
+  
+
+
+
   return (
     <Layout>
       <div className="h-auto bg-gray-100 pt-5 dark:bg-[#282c34] ">
         <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
 
-        <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0 ">
+        <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6  ">
         <div className="rounded-lg md:w-2/3 ">
-            <CartItem />
-            <CartItem />
-            <CartItem />
+          {
+            cartitem.length===0?<p className='text-center'>Your Cart is Empty! Please add some items to your cart.</p>:<> {
+              cartitem?.map((item,index) => (
+                <div key={index}>
+                 
+                  <CartItem title={item.title} image ={item.imageurl} price={item.price} describe={item.discription} slug={item.slug}/>
+                  
+                </div>
+              ))
+            }
+            </>
+           
+
+          }
+            
 
           </div>
 
@@ -33,7 +53,6 @@ function Cart() {
                 </p>
               </div>
             </div>
-            {/* <Modal  /> */}
             <AddressPop/>
           </div>
         </div>

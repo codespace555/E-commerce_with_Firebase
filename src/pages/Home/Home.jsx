@@ -25,7 +25,7 @@ function Home() {
         }
         setProduct(item);
         setIsloading(false)
-        console.log(product);
+     
       } catch (err) {
         console.error("Error getting products:   ", err);
       }
@@ -49,10 +49,10 @@ function Home() {
         </div>
         <div className="flex flex-wrap  gap-1 w-full items-center justify-center">
           {product?.map((item, index) => {
-            console.log(item?.slug);
+  
             return (
-              <Link
-                to={`/poroductdetails/${item?.slug}`}
+              <div
+                // to={`/poroductdetails/${item?.slug}`}
                 className="p-4   drop-shadow-lg  "
                 key={index}
               >
@@ -61,8 +61,9 @@ function Home() {
                   price={item?.price}
                   description={item?.discription}
                   imglink={item?.imageurl}
+                  addToCartproduct={{...item}}
                 />
-              </Link>
+              </div>
             );
           })}
         </div>

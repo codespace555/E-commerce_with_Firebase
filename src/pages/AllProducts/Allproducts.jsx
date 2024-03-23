@@ -32,7 +32,7 @@ React.useEffect(() => {
     console.log(item.slug)
     return (<Link to={`/poroductdetails/${item.slug}`} className="p-4 md:w-1/4  drop-shadow-lg  "  key={index} >
       
-      <ProductCard title={item.title}  price={item.price} description={item.discription} imglink={item.imageurl} />
+      <ProductCard title={item.title}  price={item.price} description={item.discription} imglink={item.imageurl} addToCartproduct={item}/>
       
     </Link>)
 

@@ -66,7 +66,6 @@ function AddressPop() {
                                 label="Enter Full Name"
                                 type="text"
                                 placeHolder=""
-                                required
                                 {...register("fullname", { required: true })}
                               />
                             </div>
@@ -75,7 +74,6 @@ function AddressPop() {
                                 label="Enter Full Address"
                                 type="text"
                                 placeHolder=""
-                                required
                                 {...register("address", { required: true })}
                               />
                             </div>
@@ -84,7 +82,6 @@ function AddressPop() {
                                 label="Enter Pincode"
                                 type="text"
                                 placeHolder=""
-                                required
                                 {...register("pincode", { required: true })}
                               />
                             </div>
@@ -93,21 +90,18 @@ function AddressPop() {
                                 label="Enter Mobile Number"
                                 type="text"
                                 placeHolder=""
-                                required
                                 {...register("mobilenumber", {
                                   required: true,
                                 })}
                               />
                             </div>
                             <button
-                            type="submit"
-                            className="focus:outline-none w-full text-white bg-violet-600 dark:bg-green-600 hover:bg-violet-800  outline-0 font-medium rounded-lg text-sm px-5 py-2.5 "
-                          >
-                             Order Now
-                          </button>
+                              type="submit"
+                              className="focus:outline-none w-full text-white bg-violet-600 dark:bg-green-600 hover:bg-violet-800  outline-0 font-medium rounded-lg text-sm px-5 py-2.5 "
+                            >
+                              Order Now
+                            </button>
                           </form>
-                         
-                           
                         </div>
                       </div>
                     </div>
