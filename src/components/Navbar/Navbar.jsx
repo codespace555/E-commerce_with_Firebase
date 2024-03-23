@@ -179,7 +179,7 @@ function Navbar() {
 
         {/* desktop */}
         <header>
-          <div className="flex justify-between h-10 items-center  bg-pink-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8 dark:text-white dark:bg-[#3e4042]">
+          <div className="flex justify-between h-10 items-center  bg-[#8c946c] px-4 text-sm font-medium text-white sm:px-6 lg:px-8 dark:text-white dark:bg-[#3e4042]">
             <span className="hidden md:block">
               Get free delivery on orders over ₹300{" "}
             </span>

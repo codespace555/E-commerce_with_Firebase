@@ -14,10 +14,11 @@ function App() {
   const themeMode = useSelector((state) => state.theme.themeMode);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+ 
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(
+      
       auth,
       (user) => {
         if (user) {
@@ -25,14 +26,18 @@ function App() {
             dispatch(loginauth({ user: user.email, userimg: user.photoURL }));
 
             dispatch(admin());
+
           } else {
             navigate("/");
+         
+
           }
           dispatch(loginauth({ user: user.email, userimg: user.photoURL }));
+        
         } else {
           dispatch(logoutauth());
 
-          navigate("/login");
+          navigate("/");
         }
       },
       (error) => {

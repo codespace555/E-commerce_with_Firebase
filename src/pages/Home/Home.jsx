@@ -1,37 +1,44 @@
 import React, { useState } from "react";
-import { DisplayOffer, Layout, ProductCard, SlideImg, Testimonial } from "../../components/components";
+import {
+  DisplayOffer,
+  Layout,
+  Loder,
+  ProductCard,
+  SlideImg,
+  Testimonial,
+} from "../../components/components";
 import Filter from "../../components/Filter/Filter";
-import productsfiber from '../../firebase/product/productdb';
+import productsfiber from "../../firebase/product/productdb";
 import { Link } from "react-router-dom";
 
-
 function Home() {
-const [product,setProduct] = useState([]);
+  const [product, setProduct] = useState([]);
+  const [isLoading, setIsloading] = useState(true);
   React.useEffect(() => {
     const getProducts = async () => {
       try {
         const response = await productsfiber.getProducts();
-        console.log(response)
-        let item = []
+        console.log(response);
+        let item = [];
         for (let i = 0; i < 8; i++) {
-           item.push(response[i]);
-          
+          item.push(response[i]);
         }
         setProduct(item);
-        console.log(product)
-       
+        setIsloading(false)
+        console.log(product);
       } catch (err) {
-        console.error('Error getting products:   ', err);
-      };
+        console.error("Error getting products:   ", err);
+      }
     };
     // Call function to retrieve data from db
     getProducts();
-    }, []);
+  }, []);
   return (
+    isLoading?<Loder/>:
     <Layout>
       <section>
         <div>
-         <SlideImg/>
+          <SlideImg />
         </div>
         <Filter />
         <div className="container px-5 py-8 md:py-16 mx-auto">
@@ -41,23 +48,25 @@ const [product,setProduct] = useState([]);
           {/* <div class="h-1 w-30 bg-pink-600 rounded"></div> */}
         </div>
         <div className="flex flex-wrap  gap-1 w-full items-center justify-center">
-      
-
-        { product?.map((item,index) => {
-    console.log(item?.slug)
-    return (<Link to={`/poroductdetails/${item?.slug}`} className="p-4   drop-shadow-lg  "  key={index} >
-      
-      <ProductCard title={item?.title}  price={item?.price} description={item?.discription} imglink={item?.imageurl} />
-      
-    </Link>)
-
-   })
-  }
-
-   
-
+          {product?.map((item, index) => {
+            console.log(item?.slug);
+            return (
+              <Link
+                to={`/poroductdetails/${item?.slug}`}
+                className="p-4   drop-shadow-lg  "
+                key={index}
+              >
+                <ProductCard
+                  title={item?.title}
+                  price={item?.price}
+                  description={item?.discription}
+                  imglink={item?.imageurl}
+                />
+              </Link>
+            );
+          })}
         </div>
-<DisplayOffer/>
+        <DisplayOffer />
         <div className="container px-5 py-10 mx-auto text-gray-600 body-font mb-10">
           <h1 className=" text-center text-3xl font-bold text-black dark:text-gray-300">
             Testimonial

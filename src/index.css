@@ -7,7 +7,13 @@
     align-items: center;
     justify-content: center;
     background-size: cover;
-    height: 350px;
+    height: 550px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    object-fit: cover;
+   
+
   }
   
   .each-slide-effect span {
