@@ -65,6 +65,10 @@ const router = createBrowserRouter([
         element: <ProductDetails />,
       },
       {
+        path: "/profile/:user",
+        element: <ProductDetails />,
+      },
+      {
         path: "/addproduct",
         element: 
         <AdminLayout authentication = {true} >

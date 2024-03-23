@@ -1,10 +1,12 @@
 import React from "react";
 import {  useNavigate } from "react-router-dom";
+import { deleteFromCart } from "../../store/cart/cartSlice";
+import { useDispatch } from "react-redux";
 
-function CartItem({title, image, price,describe,slug}) {
+function CartItem({title, image, price,describe,slug,deletecart}) {
 const navigate = useNavigate()
 
- 
+
   return (
     <>
       <div className="rounded-lg md:w-2/3 ">
@@ -24,7 +26,9 @@ const navigate = useNavigate()
               </h2>
               <p className="mt-1 text-xs font-semibold text-gray-700">₹{price ||100}</p>
             </div>
-            <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
+            <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6
+          
+            " onClick={deletecart}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
