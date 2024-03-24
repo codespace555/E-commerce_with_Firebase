@@ -4,10 +4,17 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { Input } from "../../ButtonInput/index.js";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { fireDB } from "../../firebase/firebaseconfig.js";
+import { addDoc, collection } from "firebase/firestore";
 
-function AddressPop() {
+function AddressPop({ amount }) {
   let [isOpen, setIsOpen] = useState(false);
-  const { register, handleSubmit,getValues } = useForm();
+  const { register, handleSubmit, getValues } = useForm();
+  const userData = useSelector((state) => state.auth.user);
+  const cartItem = useSelector((state) => state.cart.cartItem);
+  const userId = useSelector((state) => state.auth.uId);
+
   function closeModal() {
     setIsOpen(false);
   }
@@ -15,12 +22,61 @@ function AddressPop() {
   function openModal() {
     setIsOpen(true);
   }
-  const order = (data) => {
-    if(!(data)){
-      toast.error( 'Please fill all fields' );
-    }
-    console.log(data);
+
+  console.log(userId);
+
+  const order = async () => {
+    if (document.getElementById("rzp-payment")) return;
+
+    const options = {
+      key: "rzp_test_Eksk76wCAelhun",
+      key_secret: "8eGfaCtJ6xhFDVL7z9Uaz8Qj",
+      amount: parseInt(amount * 100),
+      currency: "INR",
+      order_receipt: "order_rcptid_" + getValues("fullname"),
+      name: "LOCAL",
+      description: "Product Purchase",
+      handler: function (response) {
+        toast.success("Payment Successful");
+
+        const paymentId = response.razorpay_payment_id;
+
+        const orderInfo = {
+          cartItem: { ...cartItem },
+          profile: {
+            name: getValues("fullname"),
+            contact: getValues("mobilenumber"),
+            address: getValues("address"),
+            picode: getValues("pincode"),
+            email: userData,
+            uid: userId,
+            date: new Date().toLocaleString("en-US", {
+              month: "short",
+              day: "2-digit",
+              year: "numeric",
+            }),
+            paymentId: paymentId,
+            amount: amount,
+            status: "paid",
+          },
+        };
+
+        try {
+          addDoc(collection(fireDB, "orders"), orderInfo);
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      theme: {
+        color: "#F37254",
+      },
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
   };
+
   return (
     <>
       <div className="  text-center rounded-lg text-white font-bold">
@@ -62,6 +118,7 @@ function AddressPop() {
                   <section className="">
                     <div className="flex flex-col items-center justify-center py-8 mx-auto  lg:py-0">
                       <div className="w-full  rounded-lg md:mt-0 sm:max-w-md xl:p-0 ">
+                        Total Amount - {amount}
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                           <form
                             className="space-y-4 md:space-y-6"

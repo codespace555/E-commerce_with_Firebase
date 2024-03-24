@@ -23,7 +23,7 @@ function App() {
       (user) => {
         if (user) {
           if (user?.email === "namansanjaykumar@gmail.com") {
-            dispatch(loginauth({ user: user.email, userimg: user.photoURL }));
+            dispatch(loginauth({ user: user.email, userimg: user.photoURL, uid:user.uid}));
 
             dispatch(admin());
 
@@ -32,7 +32,7 @@ function App() {
          
 
           }
-          dispatch(loginauth({ user: user.email, userimg: user.photoURL }));
+          dispatch(loginauth({ user: user.email, userimg: user.photoURL ,uid:user.uid}));
         
         } else {
           dispatch(logoutauth());

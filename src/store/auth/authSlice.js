@@ -4,7 +4,9 @@ import { createSlice } from "@reduxjs/toolkit";
     status: false,
     userData: null,
     admin:false,
-    userImg: ""
+    userImg: "",
+    user:"",
+    uId:""
     
   };
 
@@ -16,6 +18,9 @@ import { createSlice } from "@reduxjs/toolkit";
         state.status = true;
         state.userData = action.payload.userData;
         state.userImg = action.payload.userimg
+        state.user = action.payload.user
+        state.uId=action.payload.uid
+
       
       
       },

@@ -24,7 +24,8 @@ function Cart() {
     cartitem?.forEach((element) => {
       sum = sum + parseInt(element.price*element.quantity);
     });
-    setTotalAmount(sum);
+    sum >= 300 ?setTotalAmount(sum): setTotalAmount(sum+20)
+    ;
   }, [cartitem]);
 
   return (
@@ -91,11 +92,11 @@ function Cart() {
               <p className="text-lg font-bold dark:text-gray-900">Total</p>
               <div className>
                 <p className="mb-1 text-lg font-bold dark:text-gray-900 ">
-                  {totalAmount >= 300 ? totalAmount : totalAmount + 20}
+                  {totalAmount}
                 </p>
               </div>
             </div>
-            <AddressPop />
+            <AddressPop amount={totalAmount} />
           </div>
         </div>
       </div>
