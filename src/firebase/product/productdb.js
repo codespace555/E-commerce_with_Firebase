@@ -29,7 +29,7 @@ try {
         data.id = doc.id;
         return data;
     })
-    // console.log(products.map((item) => item))
+   
     return products; 
     
 } catch (error) {

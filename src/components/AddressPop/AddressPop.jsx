@@ -23,7 +23,7 @@ function AddressPop({ amount }) {
     setIsOpen(true);
   }
 
-  console.log(userId);
+  
 
   const order = async () => {
     if (document.getElementById("rzp-payment")) return;
@@ -49,7 +49,6 @@ function AddressPop({ amount }) {
             address: getValues("address"),
             picode: getValues("pincode"),
             email: userData,
-            uid: userId,
             date: new Date().toLocaleString("en-US", {
               month: "short",
               day: "2-digit",
@@ -59,6 +58,7 @@ function AddressPop({ amount }) {
             amount: amount,
             status: "paid",
           },
+          uid: userId,
         };
 
         try {
