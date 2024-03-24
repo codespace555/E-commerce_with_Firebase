@@ -3,10 +3,11 @@ import { useForm } from "react-hook-form";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { Input } from "../../ButtonInput/index.js";
+import { toast } from "react-toastify";
 
 function AddressPop() {
   let [isOpen, setIsOpen] = useState(false);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit,getValues } = useForm();
   function closeModal() {
     setIsOpen(false);
   }
@@ -14,7 +15,12 @@ function AddressPop() {
   function openModal() {
     setIsOpen(true);
   }
-  const order = (data) => console.log("Order data");
+  const order = (data) => {
+    if(!(data)){
+      toast.error( 'Please fill all fields' );
+    }
+    console.log(data);
+  };
   return (
     <>
       <div className="  text-center rounded-lg text-white font-bold">
@@ -67,6 +73,7 @@ function AddressPop() {
                                 type="text"
                                 placeHolder=""
                                 {...register("fullname", { required: true })}
+                                required
                               />
                             </div>
                             <div>
@@ -75,6 +82,7 @@ function AddressPop() {
                                 type="text"
                                 placeHolder=""
                                 {...register("address", { required: true })}
+                                required
                               />
                             </div>
                             <div>
@@ -83,6 +91,7 @@ function AddressPop() {
                                 type="text"
                                 placeHolder=""
                                 {...register("pincode", { required: true })}
+                                required
                               />
                             </div>
                             <div>
@@ -93,6 +102,7 @@ function AddressPop() {
                                 {...register("mobilenumber", {
                                   required: true,
                                 })}
+                                required
                               />
                             </div>
                             <button

@@ -3,7 +3,7 @@ import {  useNavigate } from "react-router-dom";
 import { deleteFromCart } from "../../store/cart/cartSlice";
 import { useDispatch } from "react-redux";
 
-function CartItem({title, image, price,describe,slug,deletecart}) {
+function CartItem({title, image, price,describe,slug,deletecart,quantity}) {
 const navigate = useNavigate()
 
 
@@ -22,9 +22,13 @@ const navigate = useNavigate()
                <p onClick={() => navigate(`/poroductdetails/${slug}`)}> {title||"This is title"}</p>
               </h2>
               <h2 className="text-sm  text-gray-900 dark:text-gray-300">
-                {describe||"Description"}
+                {describe.slice(0,20)||"Description"}
               </h2>
               <p className="mt-1 text-xs font-semibold text-gray-700">₹{price ||100}</p>
+              <div>
+                <button className="bg-red-500 px-5 txt-xl rounded-md py-2">{quantity ||1}</button>
+             
+              </div>
             </div>
             <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6
           

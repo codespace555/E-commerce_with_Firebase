@@ -16,7 +16,7 @@ function Navbar() {
   const authStatus = useSelector((state) => state.auth.status);
   const adminStatus = useSelector((state) => state.auth.admin);
   const userData = useSelector((state) => state.auth.userImg);
-  const cartItems = useSelector((state) => state.cart)
+  const cartItems = useSelector((state) => state.cart.cartItem)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();

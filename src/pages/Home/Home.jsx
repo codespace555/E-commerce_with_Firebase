@@ -52,7 +52,6 @@ function Home() {
   
             return (
               <div
-                // to={`/poroductdetails/${item?.slug}`}
                 className="p-4   drop-shadow-lg  "
                 key={index}
               >

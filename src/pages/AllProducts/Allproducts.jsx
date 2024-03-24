@@ -26,13 +26,13 @@ React.useEffect(() => {
 
   return (
     <>
-    <div className='flex flex-wrap'>
+    <div className='flex flex-wrap gap-5 items-center justify-around w-full'>
   
    { products?.map((item,index) => {
     console.log(item.slug)
     return (<Link to={`/poroductdetails/${item.slug}`} className="p-4 md:w-1/4  drop-shadow-lg  "  key={index} >
       
-      <ProductCard title={item.title}  price={item.price} description={item.discription} imglink={item.imageurl} addToCartproduct={item}/>
+      <ProductCard title={item.title}  price={item.price} description={item.discription} imglink={item.imageurl} addToCartproduct={item} />
       
     </Link>)
 
