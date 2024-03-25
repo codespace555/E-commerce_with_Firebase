@@ -21,6 +21,7 @@ import {
 } from "./pages/pages.js";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AdminLayout from "./pages/Admin/AdminLayout.jsx";
+import Profile from "./pages/Profile/Profile.jsx";
 
 
 const router = createBrowserRouter([
@@ -66,7 +67,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile/:user",
-        element: <ProductDetails />,
+        element: <Profile />,
       },
       {
         path: "/addproduct",

@@ -6,10 +6,15 @@ import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { darkTheme } from "../../store/theam/theme";
 import { Togglebtn } from "../../ButtonInput";
-
+import { GoPersonFill } from "react-icons/go";
+import { MdOutlineLogout } from "react-icons/md";
 import { Logo } from "../components";
 import authfirebase from "../../firebase/auth/fireAuth";
 import { logoutauth } from "../../store/auth/authSlice";
+import { SiPhpmyadmin } from "react-icons/si";
+import { SiHomeadvisor } from "react-icons/si";
+import { MdProductionQuantityLimits } from "react-icons/md";
+import { LiaJediOrder } from "react-icons/lia";
 
 function Navbar() {
   const themeMode = useSelector((state) => state.theme.themethemeMode);
@@ -30,6 +35,7 @@ function Navbar() {
   const adminItem = [
     {
       name: "Admin",
+      icon:<SiPhpmyadmin />,
       slug: "/dashboard",
       active: adminStatus,
     },
@@ -38,15 +44,18 @@ function Navbar() {
   const navItem = [
     {
       name: "Home",
+      icon: <SiHomeadvisor />,
       slug: "/",
     },
     {
       name: "All Products",
+      icon: <MdProductionQuantityLimits />,
       slug: "/all-products",
     },
     {
       name: "Order",
       slug: "/order",
+      icon:<LiaJediOrder />
     },
   ];
 
@@ -110,7 +119,7 @@ function Navbar() {
                             onClick={() => navigate(item.slug)}
                             className="hover:underline "
                           >
-                            {item.name}
+                           {item.icon} {item.name}
                           </button>
                         </li>
                       ))}
@@ -122,7 +131,7 @@ function Navbar() {
                               onClick={() => navigate(item.slug)}
                               className="hover:underline "
                             >
-                              {item.name}
+                             {item.icon}  {item.name}
                             </button>
                           </li>
                         ) : null
@@ -142,7 +151,7 @@ function Navbar() {
                           onClick={() => navigate("/login")}
                           className=" hover:bg-blue-600 hover:text-gray-300 border-blue-900 border-2 px-6 py-2 rounded-lg text-center "
                         >
-                          Login
+                          <GoPersonFill /> Login
                         </button>
                       )}
                       <Link to={"/cart"}>
@@ -222,9 +231,9 @@ function Navbar() {
                   <li key={item.slug}>
                     <button
                       onClick={() => navigate(item.slug)}
-                      className="hover:underline "
+                      className="hover:underline flex items-center justify-center gap-1"
                     >
-                      {item.name}
+                      {item.icon} {item.name}
                     </button>
                   </li>
                 ))}
@@ -234,30 +243,30 @@ function Navbar() {
                     <li key={item.slug}>
                       <button
                         onClick={() => navigate(item.slug)}
-                        className="hover:underline "
+                        className="hover:underline flex items-center justify-center gap-1"
                       >
-                        {item.name}
+                       {item.icon}  {item.name}
                       </button>
                     </li>
                   ) : null
                 )}
 </div>
-                <div className="flex items-center justify-around gap-5">
+                <div className="flex items-center justify-around gap-5 ">
                 {authStatus ? (
                   <li>
                     <button
                       onClick={logouthendel}
-                      className=" bg-green-600 hover:text-gray-300 border-green-900 border-2 px-6 py-2 rounded-lg text-center "
+                      className=" bg-green-600 hover:text-gray-300 border-green-900 border-2 px-6 py-2 rounded-lg text-center flex gap-2 items-center justify-center  "
                     >
-                      Logout
+                     <MdOutlineLogout /> Logout
                     </button>
                   </li>
                 ) : (
                   <button
                     onClick={() => navigate("/login")}
-                    className=" hover:bg-blue-600 hover:text-gray-300 border-blue-900 border-2 px-6 py-2 rounded-lg text-center "
+                    className=" hover:bg-blue-600 hover:text-gray-300 border-blue-900 border-2 px-6 py-2 rounded-lg text-center flex gap-2 items-center justify-center "
                   >
-                    Login
+                     <GoPersonFill /> Login
                   </button>
                 )}
 

@@ -5,7 +5,7 @@ function Profile() {
     const { user } = useParams()
   return (
     <div>
-   <div>profile</div>
+   <div>{user}</div>
     </div>
   )
 }

@@ -9,7 +9,7 @@ import {
 } from "../../components/components";
 import Filter from "../../components/Filter/Filter";
 import productsfiber from "../../firebase/product/productdb";
-import { Link } from "react-router-dom";
+
 
 function Home() {
   const [product, setProduct] = useState([]);
@@ -20,7 +20,7 @@ function Home() {
         const response = await productsfiber.getProducts();
         console.log(response);
         let item = [];
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < response.length; i++) {
           item.push(response[i]);
         }
         setProduct(item);

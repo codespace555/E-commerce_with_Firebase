@@ -6,7 +6,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth, fireDB, provider } from "../firebaseconfig";
-import { addDoc, collection, getDocs, orderBy, query } from "firebase/firestore";
+import { addDoc, collection, getDocs, orderBy, query, where } from "firebase/firestore";
 
 class fireauth {
   auth;
@@ -163,6 +163,26 @@ class fireauth {
     try {
       const productQuery = query(this.collection, orderBy("time"));
       const querySnapshot = await getDocs(productQuery);
+
+      const users = querySnapshot.docs.map((doc) => {
+        let data = doc.data();
+        // Add id to the returned object
+        data.id = doc.id;
+        return data;
+      });
+      // console.log(users.map((item) => item));
+      return users;
+    } catch (error) {
+      console.error("Error getting products: ", error);
+      throw error;
+    }
+  }
+
+
+  async getUser(user) {
+    try {
+      const Query = query(this.collection, where( "uid","==",user ) );
+      const querySnapshot = await getDocs(Query);
 
       const users = querySnapshot.docs.map((doc) => {
         let data = doc.data();

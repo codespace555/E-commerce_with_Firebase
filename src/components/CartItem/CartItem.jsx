@@ -22,7 +22,7 @@ const navigate = useNavigate()
                <p onClick={() => navigate(`/poroductdetails/${slug}`)}> {title||"This is title"}</p>
               </h2>
               <h2 className="text-sm  text-gray-900 dark:text-gray-300">
-                {describe.slice(0,20)||"Description"}
+         
               </h2>
               <p className="mt-1 text-xs font-semibold text-gray-700">₹{price ||100}</p>
               <div>
