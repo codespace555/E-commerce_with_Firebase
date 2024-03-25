@@ -47,7 +47,7 @@ try {
   
     
         const ProductDoc = productSnapshot.docs.map((doc) => {
-            console.log(doc.id, " => ", doc.data());
+          
             return {...doc.data(), id : doc.id};
         })
         

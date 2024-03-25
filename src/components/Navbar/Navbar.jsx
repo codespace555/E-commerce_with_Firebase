@@ -22,6 +22,8 @@ function Navbar() {
   const adminStatus = useSelector((state) => state.auth.admin);
   const userData = useSelector((state) => state.auth.userImg);
   const cartItems = useSelector((state) => state.cart.cartItem)
+  const userUid = useSelector((state) => state.auth.uId);
+
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -117,7 +119,7 @@ function Navbar() {
                         <li key={item.slug}>
                           <button
                             onClick={() => navigate(item.slug)}
-                            className="hover:underline "
+                            className="hover:underline flex flex-col gap-10 justify-between items-center"
                           >
                            {item.icon} {item.name}
                           </button>
@@ -129,7 +131,7 @@ function Navbar() {
                           <li key={item.slug}>
                             <button
                               onClick={() => navigate(item.slug)}
-                              className="hover:underline "
+                              className="hover:underline flex flex-col gap-10 justify-between items-center"
                             >
                              {item.icon}  {item.name}
                             </button>
@@ -299,6 +301,7 @@ function Navbar() {
               </ul>
               
             </div>
+            <Link to={`/profile/${userUid}`}>
             <div className="flex-shrink-0">
                   <img
                     className="h-10 w-10 rounded-full"
@@ -310,6 +313,7 @@ function Navbar() {
                     alt=""
                   />
                 </div>
+                </Link>
           </nav>
         </header>
       </div>
