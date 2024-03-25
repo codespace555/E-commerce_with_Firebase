@@ -34,8 +34,8 @@ function Order() {
                   <div className="flex flex-wrap">
                     <h1 className="flex-auto text-lg font-semibold text-slate-900 gap-2">
                     {Object.values(item.cartItem).map((key, index) => (
-                      <div key={index} className="flex-auto text-lg font-semibold text-slate-900 gap-2">
-                        <Link to={`/poroductdetails/${key.slug}`} className="text-blue-500">
+                      <div key={index} className="flex-auto text-lg font-semibold text-slate-500 gap-2">
+                        <Link to={`/poroductdetails/${key.slug}`} className="text-blue-500 hover:text-blue-800">
                         {(key.title).slice(0, 30)+"..."}
                         </Link>
                         ₹{(key.price)}
@@ -43,9 +43,9 @@ function Order() {
                     ))}  
                     
                     </h1>
-                    <div className="text-lg font-semibold text-slate-500">
-                    ₹{item.profile.amount}
-                    </div>
+                    <p className="font-extralight text-gray-500">
+                   
+                    </p>
                     <div className="w-full flex-none text-sm  text-green-700 font-semibold mt-2 ">
                       {item.profile.status}
                     </div>
@@ -61,9 +61,11 @@ function Order() {
                       </button>
                       <div
                         className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900 m-2 text-center"
-                        type="button"
+                        
                       >
-                       panding
+                       <div className="text-lg font-semibold text-slate-500 mt-1">
+                   Total- ₹{item.profile.amount}
+                    </div>
                       </div>
                     </div>
                     

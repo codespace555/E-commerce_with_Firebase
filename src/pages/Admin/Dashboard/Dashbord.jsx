@@ -1,51 +1,64 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InfoCard from "../InfoCard/InfoCard";
 import Table from "../Table";
 import products from "../../../firebase/product/productdb";
 import authfirebase from "../../../firebase/auth/fireAuth";
+import orderlist from "../../../firebase/order/order";
 
 function Dashbord() {
-  const [totalProduct , settotalProduct] = useState(0)
-  const [totaluser,setTotalUser] = useState(0)
-  React.useEffect(() => {
+  const [totalProduct , settotalProduct] = useState([])
+  const [totaluser,setTotalUser] = useState([])
+  const [order,setOrder] = useState([])
+
+ 
     const getProducts = async () => {
       try {
         const response = await products.getProducts();
-      settotalProduct(response.length)
+      settotalProduct(response)
       } catch (err) {
         console.error('Error getting products:   ', err);
-      };
-    };
-    // Call function to retrieve data from db
-    getProducts();
-    }, []);
-   
-    React.useEffect(() => {
+      }
+    }
+  
       const getUsers = async () => {
         try {
           const response = await authfirebase.getUsers();
-        setTotalUser(response.length);
+          setTotalUser(response);
+        } catch (err) {
+          console.error("Error getting products:   ", err);
+        }
+      };
+      
+    
+      const getOrder = async () => {
+        try {
+          const response = await orderlist.getOrders();
+          setOrder(response);
           console.log(response);
         } catch (err) {
           console.error("Error getting products:   ", err);
         }
       };
-      // Call function to retrieve data from db
-      getUsers();
-    }, []);
+      
+ useEffect(() => {
+  getProducts();
+  getUsers();
+  getOrder();
+ },[])
+ console.log(totaluser)
 
   return (
     <div>
-      <div className="container px-5 mx-auto my-10">
-        <div className="flex flex-wrap -m-4 text-center">
-          <InfoCard InfoName={"Total Product"} InfoNumber={totalProduct} />
-          <InfoCard InfoName={"Total Order"} InfoNumber={50} />
-          <InfoCard InfoName={"Total Users"} InfoNumber={totaluser} />
-          <InfoCard InfoName={"Total Category"} InfoNumber={50} />
+      <div className=" px-5 mx-auto my-10 w-full">
+        <div className="flex flex-wrap -m-4 text-center w-full flex items-center justify-center ">
+          <InfoCard InfoName={"Total Product"} InfoNumber={totalProduct.length} />
+          <InfoCard InfoName={"Total Order"} InfoNumber={order.length} />
+          <InfoCard InfoName={"Total Users"} InfoNumber={totaluser.length} />
+     
         </div>
       </div>
       <div className="m-4">
-     <Table/>
+     <Table orders={order} products={totalProduct}   users={totaluser}/>
 
       </div>
       

@@ -8,63 +8,36 @@ import productsfiber from "../../firebase/product/productdb";
 import authfirebase from "../../firebase/auth/fireAuth";
 import { toast } from "react-toastify";
 
-function Table() {
+function Table({ products, users, orders }) {
   let [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [allUser, setAllUser] = useState([]);
+  const [order, setOrder] = useState([]);
 
   function closeModal() {
     setIsOpen(false);
   }
-
   function openModal() {
     setIsOpen(true);
   }
-
-
-  React.useEffect(() => {
-    const getUsers = async () => {
+  const deleteProducts = useCallback(
+    async (id) => {
       try {
-        const response = await authfirebase.getUsers();
-        setAllUser(response);
-        console.log(response);
+        await productsfiber.deleteProduct(id);
+        toast("Product deleted Successfully");
       } catch (err) {
         console.error("Error getting products:   ", err);
       }
-    };
-    // Call function to retrieve data from db
-    getUsers();
-  }, []);
-
-  const deleteProducts = useCallback( async (id) => {
-    try {
-     await productsfiber.deleteProduct(id);
-      toast("Product deleted Successfully");
-     
-    } catch (err) {
-      console.error("Error getting products:   ", err);
-    }
-  },[setData]);
+    },
+    [setData]
+  );
 
   React.useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const response = await productsfiber.getProducts();
-        setData(response);
-      } catch (err) {
-        console.error("Error getting products:   ", err);
-      }
-    };
-    getProduct();
-  }, [data.length]);
-  
-
-
-
-
-
-
+    setAllUser(users);
+    setData(products);
+    setOrder(orders);
+  });
   return (
     <>
       <Tabs defaultIndex={0} className=" ">
@@ -172,25 +145,29 @@ function Table() {
                       <td className="px-6 py-4">
                         <div className=" flex gap-2">
                           <div className=" flex gap-2 cursor-pointer text-black dark:text-gray-200 ">
-                             <button onClick={() => deleteProducts(item.id)}>
-                            <div>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={1.5}
-                                stroke="currentColor"
-                                className="w-6 h-6"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                />
-                              </svg>
-                            </div>
+                            <button onClick={() => deleteProducts(item.id)}>
+                              <div>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth={1.5}
+                                  stroke="currentColor"
+                                  className="w-6 h-6"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                  />
+                                </svg>
+                              </div>
                             </button>
-                            <button onClick={() => navigate(`/editproduct/${item.slug}`)}>
+                            <button
+                              onClick={() =>
+                                navigate(`/editproduct/${item.slug}`)
+                              }
+                            >
                               <div>
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -234,14 +211,9 @@ function Table() {
                     Image
                   </th>
                   <th scope="col" className="px-6 py-3 dark:text-gray-200">
-                    Title
-                  </th>
-                  <th scope="col" className="px-6 py-3 dark:text-gray-200">
                     Price
                   </th>
-                  <th scope="col" className="px-6 py-3 dark:text-gray-200">
-                    Category
-                  </th>
+                 
                   <th scope="col" className="px-6 py-3 dark:text-gray-200">
                     Name
                   </th>
@@ -258,60 +230,85 @@ function Table() {
                     Email
                   </th>
                   <th scope="col" className="px-6 py-3 dark:text-gray-200">
+                    status
+                  </th>
+                  <th scope="col" className="px-6 py-3 dark:text-gray-200">
                     Date
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <tr className="bg-gray-50 border-b  dark:border-gray-700 dark:text-gray-200 dark:bg-[#2e3137]">
-                  <td className="px-6 py-4 text-black dark:text-gray-200">
-                    3393939
-                  </td>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-gray-200 dark:bg-[#2e3137]"
+                {order.map((item) => (
+                  <tr
+                    className="bg-gray-500 border-b  dark:border-gray-800 dark:text-gray-200 dark:bg-[#2e3137]"
+                    key={item.id}
                   >
-                    <img
-                      className="w-16"
-                      src="https://dummyimage.com/720x400"
-                      alt="img"
-                    />
-                  </th>
-                  <td className="px-6 py-4 text-black dark:text-gray-200  ">
-                    Title
-                  </td>
-                  <td className="px-6 py-4 text-black dark:text-gray-200 ">
-                    ₹100
-                  </td>
-                  <td className="px-6 py-4 text-black dark:text-gray-200">
-                    pots
-                  </td>
+                    <td className="px-6 py-4 text-black dark:text-gray-200">
+                      {item.profile.paymentId}
+                    </td>
+                    <td>
+                    {Object.values(item.cartItem).map((key, index) => (
+                      <div
+                        scope="col"
+                        className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-gray-200 dark:bg-[#2e3137] "
+                        key={index}
+                      >
+                        <div className="px-6 py-4 text-black dark:text-gray-200  ">
+                          <div>
+                          <img className="w-16" src={key.imageurl} alt="img" />
+                          </div>
+                          <div>
+                          {(key.title).slice(0, 20)+"..."}
+                          <strong>₹{key.price} </strong>
+                           X
+                          <strong> {key.quantity}</strong>
+                          
+                          </div>
+                        </div>
 
-                  <td className="px-6 py-4 text-black dark:text-gray-200">
-                    name
-                  </td>
-                  <td className="px-6 py-4 text-black dark:text-gray-200">
-                    india
-                  </td>
-                  <td className="px-6 py-4 text-black dark:text-gray-200">
-                    82828
-                  </td>
-                  <td className="px-6 py-4 text-black dark:text-gray-200">
-                    929929929929
-                  </td>
-                  <td className="px-6 py-4 text-black dark:text-gray-200">
-                    kkakka@gmail.com
-                  </td>
-                  <td className="px-6 py-4 text-black dark:text-gray-200">
-                    12 Aug 2019
-                  </td>
-                </tr>
+                      </div>
+                    ))}
+                    </td>
+                    <td className="px-6 py-4 text-black dark:text-gray-200 ">
+                      ₹{item.profile.amount}
+                    </td>
+                    
+
+                    <td className="px-6 py-4 text-black dark:text-gray-200 ">
+                    {item.profile.name}
+                    </td>
+                    <td className="px-6 py-4 text-black dark:text-gray-200">
+                    {item.profile.address}
+                    </td>
+
+                    <td className="px-6 py-4 text-black dark:text-gray-200">
+                    {item.profile.picode}
+                    </td>
+                    <td className="px-6 py-4 text-black dark:text-gray-200">
+                    {item.profile.contact}
+
+                    </td>
+                    <td className="px-6 py-4 text-black dark:text-gray-200">
+                    {item.profile.email}
+
+                    </td>
+                    <td className="px-6 py-4 text-black dark:text-gray-200">
+                    {item.profile.status}
+                      
+                    </td>
+                    <td className="px-6 py-4 text-black dark:text-gray-200">
+                    {item.profile.date}
+                     
+                    </td>
+                    
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </TabPanel>
         <TabPanel>
-          {/* <User addressInfo={addressInfo} setAddressInfo={setAddressInfo} setLoading={setLoading} /> */}
+          {/* users */}
           <div className="relative overflow-x-auto mb-10">
             <h1 className=" text-center mb-5 text-3xl font-semibold underline dark:text-gray-200">
               User Details
@@ -326,7 +323,7 @@ function Table() {
                   <th scope="col" className="px-6 py-3 dark:text-gray-200">
                     Name
                   </th>
-                
+
                   <th scope="col" className="px-6 py-3 dark:text-gray-200">
                     uid
                   </th>
@@ -339,25 +336,28 @@ function Table() {
                 </tr>
               </thead>
               <tbody>
-
-               {allUser?.map((item,index) => (<tr className="bg-gray-50 border-b  dark:border-gray-700 dark:bg-[#2e3137] dark:text-gray-200" key={index}>
-                  <td className="px-6 py-4 text-black dark:text-gray-200">
-                    {index+1}
-                  </td>
-                  <td className="px-6 py-4 text-black dark:text-gray-200">
-                    {item.name}
-                  </td>
-                  <td className="px-6 py-4 text-black dark:text-gray-200">
-                    {item.uid}
-                  </td>
-                  <td className="px-6 py-4 text-black dark:text-gray-200">
-                  {item.email}
-                  </td>
-                  <td className="px-6 py-4 text-black dark:text-gray-200">
-                    {item.time}
-                  </td>
-                </tr>))}
-
+                {allUser?.map((item, index) => (
+                  <tr
+                    className="bg-gray-50 border-b  dark:border-gray-700 dark:bg-[#2e3137] dark:text-gray-200"
+                    key={index}
+                  >
+                    <td className="px-6 py-4 text-black dark:text-gray-200">
+                      {index + 1}
+                    </td>
+                    <td className="px-6 py-4 text-black dark:text-gray-200">
+                      {item.name}
+                    </td>
+                    <td className="px-6 py-4 text-black dark:text-gray-200">
+                      {item.uid}
+                    </td>
+                    <td className="px-6 py-4 text-black dark:text-gray-200">
+                      {item.email}
+                    </td>
+                    <td className="px-6 py-4 text-black dark:text-gray-200">
+                      {item.time}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

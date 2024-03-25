@@ -38,7 +38,26 @@ async orderlists(data){
       }
     }
 
-
+async getOrders(){
+  try {
+    const oders = await  getDocs(this.order);
+    const orders = oders.docs.map((doc) => {
+      let data = doc.data();
+     
+      data.id = doc.id;
+      return data;
+  })
+ 
+  return orders; 
+    
+     
+    
+  } catch (error) {
+    console.error("Error getting products: ", error);
+      throw error; 
+    
+  }
+}
 
 
 }
