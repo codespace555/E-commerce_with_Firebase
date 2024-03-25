@@ -64,7 +64,7 @@ function Footer() {
                         </div>
                     </Link>
                     <p className="text-sm text-gray-500 sm:ml-6 sm:mt-0 mt-4 dark:text-gray-300" >© 2023 Local —
-                        <a href="https://twitter.com/knyttneve" rel="noopener noreferrer" className="text-gray-600 ml-1 dark:text-=gray-300" target="_blank" >www.local.com</a>
+                        <a href="" rel="noopener noreferrer" className="text-gray-600 ml-1 dark:text-=gray-300" target="_blank" >www.local.com</a>
                     </p>
                     <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
                         <a className="text-gray-500">

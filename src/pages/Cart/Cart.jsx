@@ -24,7 +24,7 @@ function Cart() {
     cartitem?.forEach((element) => {
       sum = sum + parseInt(element.price*element.quantity);
     });
-    sum >= 300 ?setTotalAmount(sum): setTotalAmount(sum+20)
+    sum >= 300 ?setTotalAmount(sum): setTotalAmount(sum + 20)
     ;
   }, [cartitem]);
 
@@ -36,7 +36,8 @@ function Cart() {
         <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6  ">
           <div className="rounded-lg md:w-2/3 ">
             {cartitem.length === 0 ? (
-              <p className="text-center">
+              <p className="h-[50vh] text-center flex items-center justify-center
+              font-semibold text-2xl text-gray-800">
                 Your Cart is Empty! Please add some items to your cart.
               </p>
             ) : (
