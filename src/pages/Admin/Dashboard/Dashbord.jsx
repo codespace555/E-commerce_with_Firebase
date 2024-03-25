@@ -50,7 +50,7 @@ function Dashbord() {
   return (
     <div>
       <div className=" px-5 mx-auto my-10 w-full">
-        <div className="flex flex-wrap -m-4 text-center w-full flex items-center justify-center ">
+        <div className="flex flex-wrap -m-4 text-center w-full  items-center justify-center ">
           <InfoCard InfoName={"Total Product"} InfoNumber={totalProduct.length} />
           <InfoCard InfoName={"Total Order"} InfoNumber={order.length} />
           <InfoCard InfoName={"Total Users"} InfoNumber={totaluser.length} />
