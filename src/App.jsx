@@ -22,7 +22,7 @@ function App() {
       auth,
       (user) => {
         if (user) {
-          if (user?.email === "namansanjaykumar@gmail.com") {
+          if (user?.email === "namansanjaykumar@gmail.com" || import.meta.env.VITE_ADMIN_EMAIL) {
             dispatch(loginauth({ user: user.email, userimg: user.photoURL, uid:user.uid}));
 
             dispatch(admin());
