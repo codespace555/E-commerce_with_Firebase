@@ -2,7 +2,7 @@
 
 [https://e-commerce-with-firebase.vercel.app/](https://e-commerce-with-firebase.vercel.app/)
 
-<img src="https://github.com/codespace555/E_commerce_with_Firebase/blob/main/public/screenshort/Screenshot%202024-03-26%20091611.png" alt="project-screenshot"  width="300" height="300 /"> <img src="https://github.com/codespace555/E_commerce_with_Firebase/blob/main/public/screenshort/Screenshot%202024-03-26%20091635.png" alt="project-screenshot" width="300" height="300/">
+<img src="https://github.com/codespace555/E_commerce_with_Firebase/blob/main/public/screenshort/Screenshot%202024-03-26%20091611.png" alt="project-screenshot"  width="300" height="300 /"> <img src="https://github.com/codespace555/E_commerce_with_Firebase/blob/main/public/screenshort/Screenshot%202024-03-26%20091635.png" alt="project-screenshot" width="300" height="300/"> <img src="https://github.com/codespace555/E_commerce_with_Firebase/blob/main/public/screenshort/Screenshot%202024-03-26%20091654.png" alt="project-screenshot" width="300" height="300/"> 
 
 
 
