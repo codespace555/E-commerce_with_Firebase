@@ -53,7 +53,7 @@ function Order() {
                 
                   <div className="flex space-x-4 mb-6 text-sm font-medium">
                     <div className="flex-auto flex space-x-4">
-                      <Link to={`/invoice/${item.id}`}>
+                      <Link to={`/invoice/${item.id}`} >
                       <button
                         className="h-10 px-6 font-semibold rounded-md bg-black text-white m-2"
                         type="submit" 
