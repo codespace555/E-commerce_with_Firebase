@@ -3,7 +3,7 @@ import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { FaUser, FaCartPlus } from "react-icons/fa";
 import { AiFillShopping, AiFillPlusCircle, AiFillDelete } from "react-icons/ai";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import productsfiber from "../../firebase/product/productdb";
 import authfirebase from "../../firebase/auth/fireAuth";
 import { toast } from "react-toastify";
@@ -235,6 +235,9 @@ function Table({ products, users, orders }) {
                   <th scope="col" className="px-6 py-3 dark:text-gray-200">
                     Date
                   </th>
+                  <th scope="col" className="px-6 py-3 dark:text-gray-200">
+                   Print Invoive
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -300,7 +303,13 @@ function Table({ products, users, orders }) {
                     {item.profile.date}
                      
                     </td>
-                    
+                    <td className="px-6 py-4 text-black dark:text-gray-200">
+                   <Link to={`/invoice/${item.id}`}>
+
+                   <button className="border w-28 bg-blue-500 p-2 rounded-xl">Print Invoice </button>
+                   </Link>
+                     
+                    </td>
                   </tr>
                 ))}
               </tbody>

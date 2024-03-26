@@ -1,9 +1,18 @@
+import { useState } from "react";
 import Select from "../../ButtonInput/Select";
 
-function Filter() {
+function Filter({data}) {
+  const [category,setCategroy] = useState(["Search by category.."])
   const product = ["Jacket", "shirt", "mobile"];
-  const price = [100, 200, 2000, 5000];
+  const price = ["0-100", "100-500", "500-1000", "1000-5000"];
 
+  data.map((item) => {
+    if(item.category){
+      category.push(item.category);
+    }
+    
+  })
+console.log(data)
   return (
     <div>
       <div className=" container mx-auto px-4 mt-5 ">
@@ -25,6 +34,7 @@ function Filter() {
               id="searchkey"
               placeholder="Search here"
               className="px-8 py-3 w-full rounded-md bg-violet-0 border-transparent outline-0 text-sm dark:bg-[#404246] dark:text-white"
+            
             />
           </div>
           <div className="flex items-center justify-between mt-4">
@@ -37,7 +47,7 @@ function Filter() {
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
               <div>
                 <Select
-                  option={product}
+                  option={category}
                   className="px-4 py-3 w-full rounded-md bg-gray-50 border-transparent outline-0  focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
                 />
               </div>

@@ -22,6 +22,7 @@ import {
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AdminLayout from "./pages/Admin/AdminLayout.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
+import Invoice from "./pages/Invoice/Invoice.jsx";
 
 
 const router = createBrowserRouter([
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
           <Addproduct />
         </AdminLayout>
         
+      },
+      {
+        path:"/invoice/:id" ,
+        element :<Invoice/>
       },
       {
         path: "/editproduct/:slug",

@@ -18,7 +18,6 @@ function Home() {
     const getProducts = async () => {
       try {
         const response = await productsfiber.getProducts();
-        console.log(response);
         let item = [];
         for (let i = 0; i < response.length; i++) {
           item.push(response[i]);
@@ -40,7 +39,7 @@ function Home() {
         <div>
           <SlideImg />
         </div>
-        <Filter />
+        <Filter data={product} />
         <div className="container px-5 py-8 md:py-16 mx-auto">
           <h1 className="sm:text-3xl text-2xl font-medium title-font my-5 text-gray-900 dark:text-gray-200">
             Our Latest Collection
