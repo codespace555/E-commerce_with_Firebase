@@ -1,5 +1,9 @@
 # E-commerce Platform with Firebase, Vite, Redux Toolkit, Tailwind CSS, Razorpay, and Google Authentication
 
+[https://e-commerce-with-firebase.vercel.app/](https://e-commerce-with-firebase.vercel.app/)
+
+<img src="https://github.com/codespace555/E_commerce_with_Firebase/blob/main/public/screenshort/Screenshot%202024-03-26%20091611.png" alt="project-screenshot" width="100" height="100/">
+
 This project is an e-commerce platform built using Firebase, Vite for fast development, Redux Toolkit for state management, Tailwind CSS for styling, Razorpay for payments, and Google Authentication for user sign-in. It also includes admin features, Redux DevTools for debugging, and testing email/password for admin login.
 
 ## Features
